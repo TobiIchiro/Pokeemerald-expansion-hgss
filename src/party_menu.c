@@ -971,8 +971,8 @@ static void LoadPartyMenuBoxes(u8 layout)
 
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        sPartyMenuBoxes[i].infoRects = &sPartyBoxInfoRects[PARTY_BOX_RIGHT_COLUMN];
-        sPartyMenuBoxes[i].spriteCoords = sPartyMenuSpriteCoords[layout][i];
+        sPartyMenuBoxes[i].infoRects = PARTY_MENU_HGSS ? &sPartyBoxInfoRects_HGSS[PARTY_BOX_RIGHT_COLUMN]: &sPartyBoxInfoRects[PARTY_BOX_RIGHT_COLUMN];
+        sPartyMenuBoxes[i].spriteCoords = PARTY_MENU_HGSS ? sPartyMenuSpriteCoords_HGSS[layout][i] : sPartyMenuSpriteCoords[layout][i];
         sPartyMenuBoxes[i].windowId = i;
         sPartyMenuBoxes[i].monSpriteId = SPRITE_NONE;
         sPartyMenuBoxes[i].itemSpriteId = SPRITE_NONE;
@@ -980,12 +980,12 @@ static void LoadPartyMenuBoxes(u8 layout)
         sPartyMenuBoxes[i].statusSpriteId = SPRITE_NONE;
     }
     // The first party mon goes in the left column
-    sPartyMenuBoxes[0].infoRects = &sPartyBoxInfoRects[PARTY_BOX_LEFT_COLUMN];
+    sPartyMenuBoxes[0].infoRects = PARTY_MENU_HGSS ? &sPartyBoxInfoRects_HGSS[PARTY_BOX_LEFT_COLUMN] : &sPartyBoxInfoRects[PARTY_BOX_LEFT_COLUMN];
 
     if (layout == PARTY_LAYOUT_MULTI_SHOWCASE)
-        sPartyMenuBoxes[3].infoRects = &sPartyBoxInfoRects[PARTY_BOX_LEFT_COLUMN];
+        sPartyMenuBoxes[3].infoRects = PARTY_MENU_HGSS ? &sPartyBoxInfoRects_HGSS[PARTY_BOX_LEFT_COLUMN] : &sPartyBoxInfoRects[PARTY_BOX_LEFT_COLUMN];
     else if (layout != PARTY_LAYOUT_SINGLE)
-        sPartyMenuBoxes[1].infoRects = &sPartyBoxInfoRects[PARTY_BOX_LEFT_COLUMN];
+        sPartyMenuBoxes[1].infoRects = PARTY_MENU_HGSS ? &sPartyBoxInfoRects_HGSS[PARTY_BOX_LEFT_COLUMN] : &sPartyBoxInfoRects[PARTY_BOX_LEFT_COLUMN];
 }
 
 static void RenderPartyMenuBox(u8 slot)
@@ -2237,7 +2237,7 @@ static void InitPartyMenuWindows(u8 layout)
     switch (layout)
     {
     case PARTY_LAYOUT_SINGLE:
-        InitWindows(sSinglePartyMenuWindowTemplate);
+        InitWindows(PARTY_MENU_HGSS ? sSinglePartyMenuWindowTemplate_HGSS : sSinglePartyMenuWindowTemplate);
         break;
     case PARTY_LAYOUT_DOUBLE:
         InitWindows(sDoublePartyMenuWindowTemplate);
@@ -2337,22 +2337,22 @@ static void BlitBitmapToPartyWindow_LeftColumn(u8 windowId, u8 x, u8 y, u8 width
         height = PARTY_MENU_HGSS ? 5 : 7;
     }
     if (hideHP == FALSE)
-        BlitBitmapToPartyWindow(windowId, sSlotTilemap_Main, 10, x, y, width, height);
+        BlitBitmapToPartyWindow(windowId, PARTY_MENU_HGSS ? sSlotTilemap_Main_HGSS : sSlotTilemap_Main, PARTY_MENU_HGSS ? 14 : 10, x, y, width, height);
     else
-        BlitBitmapToPartyWindow(windowId, sSlotTilemap_MainNoHP, 10, x, y, width, height);
+        BlitBitmapToPartyWindow(windowId, PARTY_MENU_HGSS ? sSlotTilemap_MainNoHP : sSlotTilemap_Main, PARTY_MENU_HGSS ? 14 : 10, x, y, width, height);
 }
 
 static void BlitBitmapToPartyWindow_RightColumn(u8 windowId, u8 x, u8 y, u8 width, u8 height, bool8 hideHP)
 {
     if (width == 0 && height == 0)
     {
-        width = 18;
-        height = 3;
+        width = PARTY_MENU_HGSS ? 14 : 18;
+        height = PARTY_MENU_HGSS ? 5 : 3;
     }
     if (hideHP == FALSE)
-        BlitBitmapToPartyWindow(windowId, sSlotTilemap_Wide, 18, x, y, width, height);
+        BlitBitmapToPartyWindow(windowId, PARTY_MENU_HGSS ? sSlotTilemap_Wide_HGSS : sSlotTilemap_Wide, PARTY_MENU_HGSS ? 14 : 18, x, y, width, height);
     else
-        BlitBitmapToPartyWindow(windowId, sSlotTilemap_WideNoHP, 18, x, y, width, height);
+        BlitBitmapToPartyWindow(windowId, PARTY_MENU_HGSS ? sSlotTilemap_WideNoHP_HGSS : sSlotTilemap_WideNoHP, PARTY_MENU_HGSS ? 14 : 18, x, y, width, height);
 }
 
 static void DrawEmptySlot(u8 windowId)

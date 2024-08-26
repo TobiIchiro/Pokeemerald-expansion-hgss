@@ -61,11 +61,83 @@ static const struct PartyMenuBoxInfoRects sPartyBoxInfoRects[] =
     },
 };
 
+static const struct PartyMenuBoxInfoRects sPartyBoxInfoRects_HGSS[] =
+{
+    [PARTY_BOX_LEFT_COLUMN] =
+    {
+        BlitBitmapToPartyWindow_LeftColumn,
+        {
+            //The below are the x, y, width, and height for each of the following info
+            50, 3, 40, 13, // Nickname
+            16, 24, 32,  9, // Level
+            106, 2,  8,  9, // Gender
+            78, 20, 24,  9, // HP
+            93, 20, 24,  9, // Max HP
+            64, 18, 48,  3  // HP bar
+        },
+        12, 34, 64, 16      // Description text (e.g. NO USE)
+    },
+    [PARTY_BOX_RIGHT_COLUMN] =
+    {
+        BlitBitmapToPartyWindow_RightColumn,
+        {
+             // See above comment
+             50, 3, 40, 13, // Nickname
+            16, 24, 32,  8, // Level
+            106, 2,  8,  8, // Gender
+            78, 20, 24,  8, // HP
+            93, 20, 24,  8, // Max HP
+            64, 18, 48,  3  // HP bar
+        },
+        77, 4, 64, 16        // Description text
+    },
+};
+
+
 
 // Each layout array has an array for each of the 6 party slots
 // The array for each slot has the sprite coords of its various sprites in the following order
 // Pokémon icon (x, y), held item (x, y), status condition (x, y), menu Poké Ball (x, y)
 static const u8 sPartyMenuSpriteCoords[PARTY_LAYOUT_COUNT][PARTY_SIZE][4 * 2] =
+{
+    [PARTY_LAYOUT_SINGLE] =
+    {
+        { 16,  40,  20,  50,  50,  52,  16,  34},
+        {104,  18, 108,  28, 136,  27, 102,  25},
+        {104,  42, 108,  52, 136,  51, 102,  49},
+        {104,  66, 108,  76, 136,  75, 102,  73},
+        {104,  90, 108, 100, 136,  99, 102,  97},
+        {104, 114, 108, 124, 136, 123, 102, 121},
+    },
+    [PARTY_LAYOUT_DOUBLE] =
+    {
+        {16, 24, 20, 34, 50, 36, 16, 18},
+        {16, 80, 20, 90, 50, 92, 16, 74},
+        {104, 18, 108, 28, 136, 27, 102, 25},
+        {104, 50, 108, 60, 136, 59, 102, 57},
+        {104, 82, 108, 92, 136, 91, 102, 89},
+        {104, 114, 108, 124, 136, 123, 102, 121},
+    },
+    [PARTY_LAYOUT_MULTI] =
+    {
+        {16, 24, 20, 34, 50, 36, 16, 18},
+        {16, 80, 20, 90, 50, 92, 16, 74},
+        {104, 26, 106, 36, 136, 35, 102, 33},
+        {104, 50, 106, 60, 136, 59, 102, 57},
+        {104, 82, 106, 92, 136, 91, 102, 89},
+        {104, 106, 106, 116, 136, 115, 102, 113},
+    },
+    [PARTY_LAYOUT_MULTI_SHOWCASE] =
+    {
+        {16, 32, 20, 42, 50, 44, 16, 26},
+        {104, 34, 106, 44, 136, 43, 102, 41},
+        {104, 58, 106, 68, 136, 67, 102, 65},
+        {16, 104, 20, 114, 50, 116, 16, 98},
+        {104, 106, 106, 116, 136, 115, 102, 113},
+        {104, 130, 106, 140, 136, 139, 102, 137},
+    },
+};
+static const u8 sPartyMenuSpriteCoords_HGSS[PARTY_LAYOUT_COUNT][PARTY_SIZE][4 * 2] =
 {
     [PARTY_LAYOUT_SINGLE] =
     {
@@ -120,16 +192,16 @@ static const u8 sFontColorTable[][3] =
     {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE,      TEXT_COLOR_DARK_GRAY},  // Unused
 };
 
-static const struct WindowTemplate sSinglePartyMenuWindowTemplate[] =
+static const struct WindowTemplate sSinglePartyMenuWindowTemplate[] = 
 {
     { // Party mon 1
         .bg = 0,
         .tilemapLeft = 1,
-        .tilemapTop = 3,
+        .tilemapTop =3,
         .width = 10,
         .height = 7,
         .paletteNum = 3,
-        .baseBlock = 0x63,
+        .baseBlock = 0x63, //0X63
     },
     { // Party mon 2
         .bg = 0,
@@ -175,6 +247,74 @@ static const struct WindowTemplate sSinglePartyMenuWindowTemplate[] =
         .height = 3,
         .paletteNum = 8,
         .baseBlock = 0x181,
+    },
+    [WIN_MSG] = {
+        .bg = 2,
+        .tilemapLeft = 1,
+        .tilemapTop = 15,
+        .width = 28,
+        .height = 4,
+        .paletteNum = 14,
+        .baseBlock = 0x1DF,
+    },
+    DUMMY_WIN_TEMPLATE
+};
+
+static const struct WindowTemplate sSinglePartyMenuWindowTemplate_HGSS[] = 
+{
+    { // Party mon 1
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 0,
+        .width = 14,
+        .height = 5,
+        .paletteNum = 3,
+        .baseBlock = 0x63,
+    },
+    { // Party mon 2
+        .bg = 0,
+        .tilemapLeft = 15,
+        .tilemapTop = 1,
+        .width = 14,
+        .height = 5,
+        .paletteNum = 4,
+        .baseBlock = 0xA9,
+    },
+    { // Party mon 3
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 5,
+        .width = 14,
+        .height = 5,
+        .paletteNum = 5,
+        .baseBlock = 0xEF,
+    },
+    { // Party mon 4
+        .bg = 0,
+        .tilemapLeft = 15,
+        .tilemapTop = 6,
+        .width = 14,
+        .height = 5,
+        .paletteNum = 6,
+        .baseBlock = 0x135,
+    },
+    { // Party mon 5
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 10,
+        .width = 14,
+        .height = 5,
+        .paletteNum = 7,
+        .baseBlock = 0x17B,
+    },
+    { // Party mon 6
+        .bg = 0,
+        .tilemapLeft = 15,
+        .tilemapTop = 11,
+        .width = 14,
+        .height = 5,
+        .paletteNum = 8,
+        .baseBlock = 0x1C1,
     },
     [WIN_MSG] = {
         .bg = 2,
@@ -628,7 +768,7 @@ static const u8 sPartyBoxCurrSelectionPalIds1[] = {116, 117, 118};
 static const u8 sPartyBoxCurrSelectionMultiPalIds[] = {132, 133, 134};
 static const u8 sPartyBoxCurrSelectionFaintedPalIds[] = {148, 149, 150};
 static const u8 sPartyBoxSelectedForActionPalIds1[] = {100, 101, 102};
-static const u8 sPartyBoxEmptySlotPalIds2[] = {49, 55, 56};
+static const u8 sPartyBoxEmptySlotPalIds2[] = {49, 55, 56}; //{Outer }
 static const u8 sPartyBoxMultiPalIds2[] = {65, 71, 72};
 static const u8 sPartyBoxFaintedPalIds2[] = {81, 87, 88};
 static const u8 sPartyBoxCurrSelectionPalIds2[] = {97, 103, 104};
