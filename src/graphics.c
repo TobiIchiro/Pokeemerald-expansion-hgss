@@ -1632,6 +1632,15 @@ const u32 gPartyMenuPokeball_Gfx[] = INCBIN_U32("graphics/party_menu/pokeball.4b
 const u32 gPartyMenuPokeballSmall_Gfx[] = INCBIN_U32("graphics/party_menu/pokeball_small.4bpp.lz"); //unused
 const u32 gPartyMenuPokeball_Pal[] = INCBIN_U32("graphics/party_menu/pokeball.gbapal.lz");
 
+//Party menu HGSS
+const u32 gPartyMenuBg_Gfx_HGSS[] = INCBIN_U32("graphics/party_menu/party_menu_hgss/bg.4bpp.lz");
+const u32 gPartyMenuBg_Pal_HGSS[] = INCBIN_U32("graphics/party_menu/party_menu_hgss/bg.gbapal.lz");
+const u32 gPartyMenuBg_Tilemap_HGSS[] = INCBIN_U32("graphics/party_menu/party_menu_hgss/bg.bin.lz");
+
+const u32 gPartyMenuPokeball_Gfx_HGSS[] = INCBIN_U32("graphics/party_menu/party_menu_hgss/pokeball.4bpp.lz");
+const u32 gPartyMenuPokeballSmall_Gfx_HGSS[] = INCBIN_U32("graphics/party_menu/party_menu_hgss/pokeball_small.4bpp.lz"); //unused
+const u32 gPartyMenuPokeball_Pal_HGSS[] = INCBIN_U32("graphics/party_menu/party_menu_hgss/pokeball.gbapal.lz");
+
 const u32 gStatusGfx_Icons[] = INCBIN_U32("graphics/interface/status_icons.4bpp.lz");
 const u32 gStatusPal_Icons[] = INCBIN_U32("graphics/interface/status_icons.gbapal.lz");
 
