@@ -878,9 +878,19 @@ static bool8 AllocPartyMenuBgGfx(void)
     switch (sPartyMenuInternal->data[0])
     {
     case 0:
-        sPartyBgGfxTilemap = malloc_and_decompress(gPartyMenuBg_Gfx, &sizeout);
-        LoadBgTiles(1, sPartyBgGfxTilemap, sizeout, 0);
-        sPartyMenuInternal->data[0]++;
+        if(PARTY_MENU_HGSS)
+        {
+            sPartyBgGfxTilemap = malloc_and_decompress(gPartyMenuBg_Gfx_HGSS, &sizeout);
+            LoadBgTiles(1, sPartyBgGfxTilemap, sizeout, 0);
+            sPartyMenuInternal->data[0]++;
+        }
+        else
+        {
+            sPartyBgGfxTilemap = malloc_and_decompress(gPartyMenuBg_Gfx, &sizeout);
+            LoadBgTiles(1, sPartyBgGfxTilemap, sizeout, 0);
+            sPartyMenuInternal->data[0]++;
+        }
+        
         break;
     case 1:
         if (!IsDma3ManagerBusyWithBgCopy())
@@ -890,9 +900,18 @@ static bool8 AllocPartyMenuBgGfx(void)
         }
         break;
     case 2:
-        LoadCompressedPalette(gPartyMenuBg_Pal, BG_PLTT_ID(0), 11 * PLTT_SIZE_4BPP);
-        CpuCopy16(gPlttBufferUnfaded, sPartyMenuInternal->palBuffer, 11 * PLTT_SIZE_4BPP);
-        sPartyMenuInternal->data[0]++;
+        if(PARTY_MENU_HGSS)
+        {
+            LoadCompressedPalette(gPartyMenuBg_Pal_HGSS, BG_PLTT_ID(0), 11 * PLTT_SIZE_4BPP);
+            CpuCopy16(gPlttBufferUnfaded, sPartyMenuInternal->palBuffer, 11 * PLTT_SIZE_4BPP);
+            sPartyMenuInternal->data[0]++;
+        }
+        else
+        {
+            LoadCompressedPalette(gPartyMenuBg_Pal, BG_PLTT_ID(0), 11 * PLTT_SIZE_4BPP);
+            CpuCopy16(gPlttBufferUnfaded, sPartyMenuInternal->palBuffer, 11 * PLTT_SIZE_4BPP);
+            sPartyMenuInternal->data[0]++;
+        }
         break;
     case 3:
         PartyPaletteBufferCopy(4);
@@ -2314,8 +2333,8 @@ static void BlitBitmapToPartyWindow_LeftColumn(u8 windowId, u8 x, u8 y, u8 width
 {
     if (width == 0 && height == 0)
     {
-        width = 10;
-        height = 7;
+        width = PARTY_MENU_HGSS ? 14 : 10;
+        height = PARTY_MENU_HGSS ? 5 : 7;
     }
     if (hideHP == FALSE)
         BlitBitmapToPartyWindow(windowId, sSlotTilemap_Main, 10, x, y, width, height);

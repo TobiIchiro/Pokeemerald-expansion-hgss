@@ -1801,6 +1801,11 @@ extern const u32 gPartyMenuBg_Gfx[];
 extern const u32 gPartyMenuBg_Tilemap[];
 extern const u32 gPartyMenuBg_Pal[];
 
+// party menu hgss graphics
+extern const u32 gPartyMenuBg_Gfx_HGSS[];
+extern const u32 gPartyMenuBg_Tilemap_HGSS[];
+extern const u32 gPartyMenuBg_Pal_HGSS[];
+
 // berry pics
 extern const u32 gBerryPic_Cheri[];
 extern const u32 gBerryPic_Chesto[];
