@@ -2333,26 +2333,26 @@ static void BlitBitmapToPartyWindow_LeftColumn(u8 windowId, u8 x, u8 y, u8 width
 {
     if (width == 0 && height == 0)
     {
-        width = PARTY_MENU_HGSS ? 14 : 10;
+        width = PARTY_MENU_HGSS ? 15 : 10;
         height = PARTY_MENU_HGSS ? 5 : 7;
     }
     if (hideHP == FALSE)
-        BlitBitmapToPartyWindow(windowId, PARTY_MENU_HGSS ? sSlotTilemap_Main_HGSS : sSlotTilemap_Main, PARTY_MENU_HGSS ? 14 : 10, x, y, width, height);
+        BlitBitmapToPartyWindow(windowId, PARTY_MENU_HGSS ? sSlotTilemap_Main_HGSS : sSlotTilemap_Main, PARTY_MENU_HGSS ? 15 : 10, x, y, width, height);
     else
-        BlitBitmapToPartyWindow(windowId, PARTY_MENU_HGSS ? sSlotTilemap_MainNoHP : sSlotTilemap_Main, PARTY_MENU_HGSS ? 14 : 10, x, y, width, height);
+        BlitBitmapToPartyWindow(windowId, PARTY_MENU_HGSS ? sSlotTilemap_MainNoHP : sSlotTilemap_Main, PARTY_MENU_HGSS ? 15 : 10, x, y, width, height);
 }
 
 static void BlitBitmapToPartyWindow_RightColumn(u8 windowId, u8 x, u8 y, u8 width, u8 height, bool8 hideHP)
 {
     if (width == 0 && height == 0)
     {
-        width = PARTY_MENU_HGSS ? 14 : 18;
+        width = PARTY_MENU_HGSS ? 15 : 18;
         height = PARTY_MENU_HGSS ? 5 : 3;
     }
     if (hideHP == FALSE)
-        BlitBitmapToPartyWindow(windowId, PARTY_MENU_HGSS ? sSlotTilemap_Wide_HGSS : sSlotTilemap_Wide, PARTY_MENU_HGSS ? 14 : 18, x, y, width, height);
+        BlitBitmapToPartyWindow(windowId, PARTY_MENU_HGSS ? sSlotTilemap_Wide_HGSS : sSlotTilemap_Wide, PARTY_MENU_HGSS ? 15 : 18, x, y, width, height);
     else
-        BlitBitmapToPartyWindow(windowId, PARTY_MENU_HGSS ? sSlotTilemap_WideNoHP_HGSS : sSlotTilemap_WideNoHP, PARTY_MENU_HGSS ? 14 : 18, x, y, width, height);
+        BlitBitmapToPartyWindow(windowId, PARTY_MENU_HGSS ? sSlotTilemap_WideNoHP_HGSS : sSlotTilemap_WideNoHP, PARTY_MENU_HGSS ? 15 : 18, x, y, width, height);
 }
 
 static void DrawEmptySlot(u8 windowId)

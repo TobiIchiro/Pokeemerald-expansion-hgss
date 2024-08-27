@@ -264,12 +264,12 @@ static const struct WindowTemplate sSinglePartyMenuWindowTemplate_HGSS[] =
 {
     { // Party mon 1
         .bg = 0,
-        .tilemapLeft = 1,
+        .tilemapLeft = 0,
         .tilemapTop = 0,
-        .width = 14,
+        .width = 15,
         .height = 5,
         .paletteNum = 3,
-        .baseBlock = 0x63,
+        .baseBlock = 0x50, //0x63
     },
     { // Party mon 2
         .bg = 0,
@@ -282,7 +282,7 @@ static const struct WindowTemplate sSinglePartyMenuWindowTemplate_HGSS[] =
     },
     { // Party mon 3
         .bg = 0,
-        .tilemapLeft = 1,
+        .tilemapLeft = 0,
         .tilemapTop = 5,
         .width = 14,
         .height = 5,
@@ -300,7 +300,7 @@ static const struct WindowTemplate sSinglePartyMenuWindowTemplate_HGSS[] =
     },
     { // Party mon 5
         .bg = 0,
-        .tilemapLeft = 1,
+        .tilemapLeft = 0,
         .tilemapTop = 10,
         .width = 14,
         .height = 5,
@@ -318,7 +318,7 @@ static const struct WindowTemplate sSinglePartyMenuWindowTemplate_HGSS[] =
     },
     [WIN_MSG] = {
         .bg = 2,
-        .tilemapLeft = 1,
+        .tilemapLeft = 0,
         .tilemapTop = 15,
         .width = 28,
         .height = 4,
