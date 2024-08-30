@@ -623,11 +623,13 @@ static const u8 sPartyBoxCurrSelectionPalIds1[] = {116, 117, 118};
 static const u8 sPartyBoxCurrSelectionMultiPalIds[] = {132, 133, 134};
 static const u8 sPartyBoxCurrSelectionFaintedPalIds[] = {148, 149, 150};
 static const u8 sPartyBoxSelectedForActionPalIds1[] = {100, 101, 102};
-static const u8 sPartyBoxEmptySlotPalIds2[] = {49, 55, 56}; //{Outer }
+static const u8 sPartyBoxEmptySlotPalIds2[] = {49, 55, 56};
 static const u8 sPartyBoxMultiPalIds2[] = {65, 71, 72};
 static const u8 sPartyBoxFaintedPalIds2[] = {81, 87, 88};
-static const u8 sPartyBoxCurrSelectionPalIds2[] = {97, 103, 104};
+static const u8 sPartyBoxCurrSelectionPalIds2[] = {113, 119, 120};
 static const u8 sPartyBoxSelectedForActionPalIds2[] = {161, 167, 168};
+static const u8 sPartyBoxSelectedForActionPalIds3[] = {97, 103, 104};
+static const u8 sPartyBoxCurrSelectionFaintedPalIds2[] = {145, 151, 152};
 static const u8 sPartyBoxNoMonPalIds[] = {17, 27, 28};
 
 static const u8 *const sActionStringTable[] =

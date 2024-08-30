@@ -2366,7 +2366,7 @@ static void LoadPartyBoxPalette(struct PartyMenuBox *menuBox, u8 palFlags)
         if (palFlags & PARTY_PAL_SELECTED)
         {
             LOAD_PARTY_BOX_PAL(sPartyBoxSelectedForActionPalIds1, sPartyBoxPalOffsets1);
-            LOAD_PARTY_BOX_PAL(sPartyBoxCurrSelectionPalIds2, sPartyBoxPalOffsets2);
+            LOAD_PARTY_BOX_PAL(sPartyBoxSelectedForActionPalIds3, sPartyBoxPalOffsets2);
         }
         else
         {
@@ -2384,7 +2384,7 @@ static void LoadPartyBoxPalette(struct PartyMenuBox *menuBox, u8 palFlags)
         if (palFlags & PARTY_PAL_SELECTED)
         {
             LOAD_PARTY_BOX_PAL(sPartyBoxSelectedForActionPalIds1, sPartyBoxPalOffsets1);
-            LOAD_PARTY_BOX_PAL(sPartyBoxCurrSelectionPalIds2, sPartyBoxPalOffsets2);
+            LOAD_PARTY_BOX_PAL(sPartyBoxSelectedForActionPalIds3, sPartyBoxPalOffsets2);
         }
         else
         {
@@ -2397,7 +2397,7 @@ static void LoadPartyBoxPalette(struct PartyMenuBox *menuBox, u8 palFlags)
         if (palFlags & PARTY_PAL_SELECTED)
         {
             LOAD_PARTY_BOX_PAL(sPartyBoxCurrSelectionFaintedPalIds, sPartyBoxPalOffsets1);
-            LOAD_PARTY_BOX_PAL(sPartyBoxCurrSelectionPalIds2, sPartyBoxPalOffsets2);
+            LOAD_PARTY_BOX_PAL(sPartyBoxCurrSelectionFaintedPalIds2, sPartyBoxPalOffsets2);
         }
         else
         {
