@@ -36,12 +36,12 @@ static const struct PartyMenuBoxInfoRects sPartyBoxInfoRects[] =
         BlitBitmapToPartyWindow_LeftColumn,
         {
             //The below are the x, y, width, and height for each of the following info
-            24, 11, 40, 13, // Nickname
-            32, 20, 32,  8, // Level
-            64, 20,  8,  8, // Gender
-            38, 37, 24,  8, // HP
-            53, 37, 24,  8, // Max HP
-            24, 35, 48,  3  // HP bar
+            50, 3, 40, 13, // Nickname
+            10, 22, 32,  9, // Level
+            106, 2,  8,  9, // Gender
+            78, 20, 24,  9, // HP
+            93, 20, 24,  9, // Max HP
+            64, 18, 48,  4  // HP bar
         },
         12, 34, 64, 16      // Description text (e.g. NO USE)
     },
@@ -50,16 +50,18 @@ static const struct PartyMenuBoxInfoRects sPartyBoxInfoRects[] =
         BlitBitmapToPartyWindow_RightColumn,
         {
              // See above comment
-             22,  3, 40, 13, // Nickname
-             30, 12, 32,  8, // Level
-             62, 12,  8,  8, // Gender
-            102, 12, 24,  8, // HP
-            117, 12, 24,  8, // Max HP
-             88, 10, 48,  3  // HP bar
+             50, 3, 40, 13, // Nickname
+            10, 22, 32,  9, // Level
+            106, 2,  8,  9, // Gender
+            78, 20, 24,  9, // HP
+            93, 20, 24,  9, // Max HP
+            64, 18, 48,  4  // HP bar
         },
-        77, 4, 64, 16        // Description text
+        12, 34, 64, 16      // Description text (e.g. NO USE)
     },
 };
+
+
 
 // Each layout array has an array for each of the 6 party slots
 // The array for each slot has the sprite coords of its various sprites in the following order
@@ -68,12 +70,12 @@ static const u8 sPartyMenuSpriteCoords[PARTY_LAYOUT_COUNT][PARTY_SIZE][4 * 2] =
 {
     [PARTY_LAYOUT_SINGLE] =
     {
-        { 16,  40,  20,  50,  50,  52,  16,  34},
-        {104,  18, 108,  28, 136,  27, 102,  25},
-        {104,  42, 108,  52, 136,  51, 102,  49},
-        {104,  66, 108,  76, 136,  75, 102,  73},
-        {104,  90, 108, 100, 136,  99, 102,  97},
-        {104, 114, 108, 124, 136, 123, 102, 121},
+        { 31,   10,  20,  50,  50,  29,  16,  18},
+        {151,   18, 108,  28, 136,  27, 136,  26},
+        { 31,   50, 108,  52, 136,  51,  16,  58},
+        {151,   58, 108,  76, 136,  75, 136,  66},
+        { 31,   90, 108, 100, 136,  99,  16,  98},
+        {151,   98, 108, 124, 136, 123, 136, 106},
     },
     [PARTY_LAYOUT_DOUBLE] =
     {
@@ -111,7 +113,7 @@ static const u32 sCancelButton_Tilemap[] = INCBIN_U32("graphics/party_menu/cance
 // Text colors for BG, FG, and Shadow in that order
 static const u8 sFontColorTable[][3] =
 {
-    {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_LIGHT_GRAY, TEXT_COLOR_DARK_GRAY},  // Default
+    {TEXT_COLOR_TRANSPARENT, 0xE, 0xD},  // Default
     {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE,      TEXT_COLOR_GREEN},      // Unused
     {TEXT_COLOR_TRANSPARENT, TEXT_DYNAMIC_COLOR_2,  TEXT_DYNAMIC_COLOR_3},  // Gender symbol
     {TEXT_COLOR_WHITE,       TEXT_COLOR_DARK_GRAY,  TEXT_COLOR_LIGHT_GRAY}, // Selection actions
@@ -123,61 +125,61 @@ static const struct WindowTemplate sSinglePartyMenuWindowTemplate[] =
 {
     { // Party mon 1
         .bg = 0,
-        .tilemapLeft = 1,
-        .tilemapTop =3,
-        .width = 10,
-        .height = 7,
+        .tilemapLeft = 0,
+        .tilemapTop = 0,
+        .width = 15,
+        .height = 5,
         .paletteNum = 3,
-        .baseBlock = 0x63, //0X63
+        .baseBlock = 0x63, //0x63
     },
     { // Party mon 2
         .bg = 0,
-        .tilemapLeft = 12,
+        .tilemapLeft = 15,
         .tilemapTop = 1,
-        .width = 18,
-        .height = 3,
+        .width = 15,
+        .height = 5,
         .paletteNum = 4,
-        .baseBlock = 0xA9,
+        .baseBlock = 0xAE,
     },
     { // Party mon 3
         .bg = 0,
-        .tilemapLeft = 12,
-        .tilemapTop = 4,
-        .width = 18,
-        .height = 3,
+        .tilemapLeft = 0,
+        .tilemapTop = 5,
+        .width = 15,
+        .height = 5,
         .paletteNum = 5,
-        .baseBlock = 0xDF,
+        .baseBlock = 0xF9,
     },
     { // Party mon 4
         .bg = 0,
-        .tilemapLeft = 12,
-        .tilemapTop = 7,
-        .width = 18,
-        .height = 3,
+        .tilemapLeft = 15,
+        .tilemapTop = 6,
+        .width = 15,
+        .height = 5,
         .paletteNum = 6,
-        .baseBlock = 0x115,
+        .baseBlock = 0x144,
     },
     { // Party mon 5
         .bg = 0,
-        .tilemapLeft = 12,
+        .tilemapLeft = 0,
         .tilemapTop = 10,
-        .width = 18,
-        .height = 3,
+        .width = 15,
+        .height = 5,
         .paletteNum = 7,
-        .baseBlock = 0x14B,
+        .baseBlock = 0x18F,
     },
     { // Party mon 6
         .bg = 0,
-        .tilemapLeft = 12,
-        .tilemapTop = 13,
-        .width = 18,
-        .height = 3,
+        .tilemapLeft = 15,
+        .tilemapTop = 11,
+        .width = 15,
+        .height = 5,
         .paletteNum = 8,
-        .baseBlock = 0x181,
+        .baseBlock = 0x1DA,
     },
     [WIN_MSG] = {
         .bg = 2,
-        .tilemapLeft = 1,
+        .tilemapLeft = 0,
         .tilemapTop = 15,
         .width = 28,
         .height = 4,
@@ -390,7 +392,7 @@ static const struct WindowTemplate sCancelButtonWindowTemplate =
     .width = 6,
     .height = 2,
     .paletteNum = 3,
-    .baseBlock = 0x1C7,
+    .baseBlock = 0x225,
 };
 
 static const struct WindowTemplate sMultiCancelButtonWindowTemplate =
@@ -401,7 +403,7 @@ static const struct WindowTemplate sMultiCancelButtonWindowTemplate =
     .width = 6,
     .height = 2,
     .paletteNum = 3,
-    .baseBlock = 0x1C7,
+    .baseBlock = 0x225,
 };
 
 static const struct WindowTemplate sConfirmButtonWindowTemplate =
@@ -412,7 +414,7 @@ static const struct WindowTemplate sConfirmButtonWindowTemplate =
     .width = 6,
     .height = 2,
     .paletteNum = 3,
-    .baseBlock = 0x1D3,
+    .baseBlock = 0x231,
 };
 
 static const struct WindowTemplate sDefaultPartyMsgWindowTemplate =
@@ -594,11 +596,12 @@ static const struct WindowTemplate sUnusedWindowTemplate2 =
 // Plain tilemaps for party menu slots.
 // The versions with no HP bar are used by eggs, and in certain displays like registering at a battle facility.
 // There is no empty version of the main slot because it shouldn't ever be empty.
-static const u8 sSlotTilemap_Main[]      = INCBIN_U8("graphics/party_menu/slot_main.bin");
-static const u8 sSlotTilemap_MainNoHP[]  = INCBIN_U8("graphics/party_menu/slot_main_no_hp.bin");
-static const u8 sSlotTilemap_Wide[]      = INCBIN_U8("graphics/party_menu/slot_wide.bin");
-static const u8 sSlotTilemap_WideNoHP[]  = INCBIN_U8("graphics/party_menu/slot_wide_no_hp.bin");
-static const u8 sSlotTilemap_WideEmpty[] = INCBIN_U8("graphics/party_menu/slot_wide_empty.bin");
+//HGSS Party screen
+static const u8 sSlotTilemap_Main[]      = INCBIN_U8("graphics/party_menu/party_menu_hgss/slot_main.bin");
+static const u8 sSlotTilemap_MainNoHP[]  = INCBIN_U8("graphics/party_menu/party_menu_hgss/slot_main_no_hp.bin");
+static const u8 sSlotTilemap_Wide[]      = INCBIN_U8("graphics/party_menu/party_menu_hgss/slot_wide.bin");
+static const u8 sSlotTilemap_WideNoHP[]  = INCBIN_U8("graphics/party_menu/party_menu_hgss/slot_wide_no_hp.bin");
+static const u8 sSlotTilemap_WideEmpty[] = INCBIN_U8("graphics/party_menu/party_menu_hgss/slot_wide_empty.bin");
 
 // Palette offsets
 static const u8 sGenderPalOffsets[] = {11, 12};
