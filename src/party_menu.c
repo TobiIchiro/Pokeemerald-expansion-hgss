@@ -508,7 +508,11 @@ static void ShowMoveSelectWindow(u8 slot);
 static void Task_HandleWhichMoveInput(u8 taskId);
 
 // static const data
-#include "data/party_menu.h"
+#ifdef PARTY_MENU_HGSS
+    #include "data/party_menu_hgss.h"
+#else
+    #include "data/party_menu.h"
+#endif
 
 // code
 static void InitPartyMenu(u8 menuType, u8 layout, u8 partyAction, bool8 keepCursorPos, u8 messageId, TaskFunc task, MainCallback callback)
@@ -878,19 +882,20 @@ static bool8 AllocPartyMenuBgGfx(void)
     switch (sPartyMenuInternal->data[0])
     {
     case 0:
-        sPartyBgGfxTilemap = malloc_and_decompress(gPartyMenuBg_Gfx, &sizeout);
+        sPartyBgGfxTilemap = malloc_and_decompress(PARTY_MENU_HGSS ? gPartyMenuBg_Gfx_HGSS : gPartyMenuBg_Gfx, &sizeout);
         LoadBgTiles(1, sPartyBgGfxTilemap, sizeout, 0);
         sPartyMenuInternal->data[0]++;
+        
         break;
     case 1:
         if (!IsDma3ManagerBusyWithBgCopy())
         {
-            LZDecompressWram(gPartyMenuBg_Tilemap, sPartyBgTilemapBuffer);
+            LZDecompressWram(PARTY_MENU_HGSS ? gPartyMenuBg_Tilemap_HGSS : gPartyMenuBg_Tilemap, sPartyBgTilemapBuffer);
             sPartyMenuInternal->data[0]++;
         }
         break;
     case 2:
-        LoadCompressedPalette(gPartyMenuBg_Pal, BG_PLTT_ID(0), 11 * PLTT_SIZE_4BPP);
+        LoadCompressedPalette(PARTY_MENU_HGSS ? gPartyMenuBg_Pal_HGSS : gPartyMenuBg_Pal, BG_PLTT_ID(0), 11 * PLTT_SIZE_4BPP);
         CpuCopy16(gPlttBufferUnfaded, sPartyMenuInternal->palBuffer, 11 * PLTT_SIZE_4BPP);
         sPartyMenuInternal->data[0]++;
         break;
@@ -2314,31 +2319,31 @@ static void BlitBitmapToPartyWindow_LeftColumn(u8 windowId, u8 x, u8 y, u8 width
 {
     if (width == 0 && height == 0)
     {
-        width = 10;
-        height = 7;
+        width = PARTY_MENU_HGSS ? 15 : 10;
+        height = PARTY_MENU_HGSS ? 5 : 7;
     }
     if (hideHP == FALSE)
-        BlitBitmapToPartyWindow(windowId, sSlotTilemap_Main, 10, x, y, width, height);
+        BlitBitmapToPartyWindow(windowId, sSlotTilemap_Main, PARTY_MENU_HGSS ? 15 : 10, x, y, width, height);
     else
-        BlitBitmapToPartyWindow(windowId, sSlotTilemap_MainNoHP, 10, x, y, width, height);
+        BlitBitmapToPartyWindow(windowId, sSlotTilemap_MainNoHP, PARTY_MENU_HGSS ? 15 : 10, x, y, width, height);
 }
 
 static void BlitBitmapToPartyWindow_RightColumn(u8 windowId, u8 x, u8 y, u8 width, u8 height, bool8 hideHP)
 {
     if (width == 0 && height == 0)
     {
-        width = 18;
-        height = 3;
+        width = PARTY_MENU_HGSS ? 15 : 18;
+        height = PARTY_MENU_HGSS ? 5 : 3;
     }
     if (hideHP == FALSE)
-        BlitBitmapToPartyWindow(windowId, sSlotTilemap_Wide, 18, x, y, width, height);
+        BlitBitmapToPartyWindow(windowId, sSlotTilemap_Wide, PARTY_MENU_HGSS ? 15 : 18, x, y, width, height);
     else
-        BlitBitmapToPartyWindow(windowId, sSlotTilemap_WideNoHP, 18, x, y, width, height);
+        BlitBitmapToPartyWindow(windowId, sSlotTilemap_WideNoHP, PARTY_MENU_HGSS ? 15 : 18, x, y, width, height);
 }
 
 static void DrawEmptySlot(u8 windowId)
 {
-    BlitBitmapToPartyWindow(windowId, sSlotTilemap_WideEmpty, 18, 0, 0, 18, 3);
+    BlitBitmapToPartyWindow(windowId, sSlotTilemap_WideEmpty,  PARTY_MENU_HGSS ? 15 : 18, 0, 0, PARTY_MENU_HGSS ? 15 : 18, PARTY_MENU_HGSS ? 5 : 3);
 }
 
 #define LOAD_PARTY_BOX_PAL(paletteIds, paletteOffsets)                                                    \
@@ -2361,7 +2366,7 @@ static void LoadPartyBoxPalette(struct PartyMenuBox *menuBox, u8 palFlags)
         if (palFlags & PARTY_PAL_SELECTED)
         {
             LOAD_PARTY_BOX_PAL(sPartyBoxSelectedForActionPalIds1, sPartyBoxPalOffsets1);
-            LOAD_PARTY_BOX_PAL(sPartyBoxCurrSelectionPalIds2, sPartyBoxPalOffsets2);
+            LOAD_PARTY_BOX_PAL(sPartyBoxSelectedForActionPalIds3, sPartyBoxPalOffsets2);
         }
         else
         {
@@ -2379,7 +2384,7 @@ static void LoadPartyBoxPalette(struct PartyMenuBox *menuBox, u8 palFlags)
         if (palFlags & PARTY_PAL_SELECTED)
         {
             LOAD_PARTY_BOX_PAL(sPartyBoxSelectedForActionPalIds1, sPartyBoxPalOffsets1);
-            LOAD_PARTY_BOX_PAL(sPartyBoxCurrSelectionPalIds2, sPartyBoxPalOffsets2);
+            LOAD_PARTY_BOX_PAL(sPartyBoxSelectedForActionPalIds3, sPartyBoxPalOffsets2);
         }
         else
         {
@@ -2392,7 +2397,7 @@ static void LoadPartyBoxPalette(struct PartyMenuBox *menuBox, u8 palFlags)
         if (palFlags & PARTY_PAL_SELECTED)
         {
             LOAD_PARTY_BOX_PAL(sPartyBoxCurrSelectionFaintedPalIds, sPartyBoxPalOffsets1);
-            LOAD_PARTY_BOX_PAL(sPartyBoxCurrSelectionPalIds2, sPartyBoxPalOffsets2);
+            LOAD_PARTY_BOX_PAL(sPartyBoxCurrSelectionFaintedPalIds2, sPartyBoxPalOffsets2);
         }
         else
         {
@@ -2594,11 +2599,13 @@ static void DisplayPartyPokemonHPBar(u16 hp, u16 maxhp, struct PartyMenuBox *men
     hpFraction = GetScaledHPFraction(hp, maxhp, menuBox->infoRects->dimensions[22]);
     FillWindowPixelRect(menuBox->windowId, sHPBarPalOffsets[1], menuBox->infoRects->dimensions[20], menuBox->infoRects->dimensions[21], hpFraction, 1);
     FillWindowPixelRect(menuBox->windowId, sHPBarPalOffsets[0], menuBox->infoRects->dimensions[20], menuBox->infoRects->dimensions[21] + 1, hpFraction, 2);
+    if (PARTY_MENU_HGSS) FillWindowPixelRect(menuBox->windowId, sHPBarPalOffsets[1], menuBox->infoRects->dimensions[20], menuBox->infoRects->dimensions[21] + 3, hpFraction, 1);
     if (hpFraction != menuBox->infoRects->dimensions[22])
     {
-        // This appears to be an alternating fill
-        FillWindowPixelRect(menuBox->windowId, 0x0D, menuBox->infoRects->dimensions[20] + hpFraction, menuBox->infoRects->dimensions[21], menuBox->infoRects->dimensions[22] - hpFraction, 1);
-        FillWindowPixelRect(menuBox->windowId, 0x02, menuBox->infoRects->dimensions[20] + hpFraction, menuBox->infoRects->dimensions[21] + 1, menuBox->infoRects->dimensions[22] - hpFraction, 2);
+        // Fill when fainted
+        FillWindowPixelRect(menuBox->windowId, PARTY_MENU_HGSS ? 0x33 : 0x0D, menuBox->infoRects->dimensions[20] + hpFraction, menuBox->infoRects->dimensions[21], menuBox->infoRects->dimensions[22] - hpFraction, 1);
+        FillWindowPixelRect(menuBox->windowId, PARTY_MENU_HGSS ? 0x32 : 0x02, menuBox->infoRects->dimensions[20] + hpFraction, menuBox->infoRects->dimensions[21] + 1, menuBox->infoRects->dimensions[22] - hpFraction, 2);
+        if (PARTY_MENU_HGSS) FillWindowPixelRect(menuBox->windowId, 0x33, menuBox->infoRects->dimensions[20] + hpFraction, menuBox->infoRects->dimensions[21] + 3, menuBox->infoRects->dimensions[22] - hpFraction, 1);
     }
     CopyWindowToVram(menuBox->windowId, COPYWIN_GFX);
 }
