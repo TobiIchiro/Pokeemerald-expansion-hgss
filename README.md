@@ -24,3 +24,5 @@ To use this branch use the command
 git pull Tobi party_menu_hgss
 ```
 ## Summary Screen HGSS Style
+
+### WIP
