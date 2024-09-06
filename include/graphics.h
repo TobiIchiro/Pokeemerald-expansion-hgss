@@ -1978,6 +1978,11 @@ extern const u16 gSummaryScreen_MoveEffect_Battle_Tilemap[];
 extern const u16 gSummaryScreen_MoveEffect_Contest_Tilemap[];
 extern const u16 gSummaryScreen_MoveEffect_Cancel_Tilemap[];
 
+// Summary Screen HGSS START
+extern const u32 gSummaryScreen_Gfx_HGSS[];
+extern const u32 gSummaryScreen_Gfx_HGSS_2[];
+// Summary Screen HGSS END
+
 extern const u32 gMoveTypes_Gfx[];
 extern const u32 gSummaryMoveSelect_Gfx[];
 extern const u32 gSummaryMoveSelect_Pal[];
