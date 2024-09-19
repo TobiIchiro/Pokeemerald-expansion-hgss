@@ -2717,6 +2717,7 @@ static void PutPageWindowTilemaps(u8 page)
     u8 i;
 
     ClearWindowTilemap(PSS_LABEL_RIGHT_TITLE);
+    ClearWindowTilemap(PSS_LABEL_WINDOW_LEFT);
     /*ClearWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_TITLE);
     ClearWindowTilemap(PSS_LABEL_WINDOW_BATTLE_MOVES_TITLE);
     ClearWindowTilemap(PSS_LABEL_WINDOW_CONTEST_MOVES_TITLE);*/
@@ -2725,10 +2726,11 @@ static void PutPageWindowTilemaps(u8 page)
     {
     case PSS_PAGE_INFO:
         PutWindowTilemap(PSS_LABEL_RIGHT_TITLE);
-        //PutWindowTilemap(PSS_LABEL_WINDOW_PROMPT_CANCEL);
+        PutWindowTilemap(PSS_LABEL_WINDOW_LEFT);
         /*if (InBattleFactory() == TRUE || InSlateportBattleTent() == TRUE)
             PutWindowTilemap(PSS_LABEL_WINDOW_POKEMON_INFO_RENTAL);
         PutWindowTilemap(PSS_LABEL_WINDOW_POKEMON_INFO_TYPE);*/
+        ScheduleBgCopyTilemapToVram(0);
         break;}
     /*case PSS_PAGE_SKILLS:
         PutWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_TITLE);
