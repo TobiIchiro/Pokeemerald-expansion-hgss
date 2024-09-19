@@ -1980,7 +1980,9 @@ extern const u16 gSummaryScreen_MoveEffect_Cancel_Tilemap[];
 
 // Summary Screen HGSS START
 extern const u32 gSummaryScreen_Gfx_HGSS[];
-extern const u32 gSummaryScreen_Gfx_HGSS_2[];
+extern const u32 gSummaryScreen_Pal_HGSS[];
+extern const u32 gSummaryPage_BG_Tilemap_HGSS[];
+extern const u32 gSummaryPage_Info_Tilemap_HGSS[];
 // Summary Screen HGSS END
 
 extern const u32 gMoveTypes_Gfx[];
