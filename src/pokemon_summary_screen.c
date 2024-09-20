@@ -271,8 +271,8 @@ static void PrintPageSpecificText(u8);
 static void CreateTextPrinterTask(u8);
 static void PrintInfoPageText(void);
 static void Task_PrintInfoPage(u8);
-static void PrintMonOTName(void);
-static void PrintMonOTID(void);
+static void PrintMonOTName(int start, int end, int width);
+static void PrintMonOTID(int start, int end, int width);
 static void PrintMonAbilityName(void);
 static void PrintMonAbilityDescription(void);
 static void BufferMonTrainerMemo(void);
@@ -439,7 +439,9 @@ enum
     PSS_COLOR_FEMALE_GENDER_SYMBOL,
 };
 static const u32 * const sPageTilemaps[] = {
-    gSummaryPage_Info_Tilemap_HGSS
+    gSummaryPage_Info_Tilemap_HGSS,
+    gSummaryPage_Memo_Tilemap_HGSS,
+    gSummaryPage_Skills_Tilemap_HGSS
 };
 
 static const u8 sTextColors[][3] =
@@ -1113,7 +1115,7 @@ static void InitBGs(void)
     SetBgTilemapBuffer(3, sMonSummaryScreen->bgTilemapBufferBG);
     ResetAllBgsCoordinates();
     ScheduleBgCopyTilemapToVram(1);
-    ScheduleBgCopyTilemapToVram(2);
+    //ScheduleBgCopyTilemapToVram(2);
     ScheduleBgCopyTilemapToVram(3);
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
     SetGpuReg(REG_OFFSET_BLDCNT, 0);
@@ -2857,34 +2859,32 @@ static void CreateTextPrinterTask(u8 pageIndex)
 
 static void PrintInfoPageText(void)
 {
-    if (sMonSummaryScreen->summary.isEgg)
-    {
-        PrintEggOTName();
-        PrintEggOTID();
-        PrintEggState();
-        PrintEggMemo();
-    }
-    else
-    {
-        PrintMonOTName();
-        PrintMonOTID();
-        PrintMonAbilityName();
-        PrintMonAbilityDescription();
-        BufferMonTrainerMemo();
-        PrintMonTrainerMemo();
-    }
+    int start = 82;
+    int end = 143;
+    int width = end - start;
+    //PrintMonDexNo
+    //PrintMonSpeciesName
+    //PrintMonType
+    PrintMonOTName(start, end, width);
+    PrintMonOTName(start, end, width);
+    //PrintMonExpPts
+    //PrintMonToNextLv
 }
 
 static void Task_PrintInfoPage(u8 taskId)
 {
+    int start = 82;
+    int end = 143;
+    int width = end - start;
     s16 *data = gTasks[taskId].data;
+
     switch (data[0])
     {
         case 1:
-            PrintMonOTName();
+            PrintMonOTName(start, end, width);
             break;
         case 2:
-            PrintMonOTID();
+            PrintMonOTID(start, end, width);
             break;
         case 3:
             PrintMonAbilityName();
@@ -2905,29 +2905,28 @@ static void Task_PrintInfoPage(u8 taskId)
     data[0]++;
 }
 
-static void PrintMonOTName(void)
+static void PrintMonOTName(int start, int end, int width)
 {
-    /*int x, windowId;
+    int x;
     if (InBattleFactory() != TRUE && InSlateportBattleTent() != TRUE)
     {
-        //windowId = AddWindowFromTemplateList(sPageInfoTemplate, PSS_DATA_WINDOW_INFO_ORIGINAL_TRAINER);
-        PrintTextOnWindow(windowId, gText_OTSlash, 0, 1, 0, 1);
-        x = GetStringWidth(FONT_NORMAL, gText_OTSlash, 0);
+        //PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT, gText_OTSlash, 7, 56, 0, 1);
+        x = start + GetStringCenterAlignXOffset(FONT_NORMAL, sMonSummaryScreen->summary.OTName,width);
         if (sMonSummaryScreen->summary.OTGender == 0)
-            PrintTextOnWindow(windowId, sMonSummaryScreen->summary.OTName, x, 1, 0, 5);
+            PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT, sMonSummaryScreen->summary.OTName, x, 56, 0, 5);
         else
-            PrintTextOnWindow(windowId, sMonSummaryScreen->summary.OTName, x, 1, 0, 6);
-    }*/
+            PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT, sMonSummaryScreen->summary.OTName, x, 56, 0, 6);
+    }
 }
 
-static void PrintMonOTID(void)
+static void PrintMonOTID(int start, int end, int width)
 {
     int xPos;
     if (InBattleFactory() != TRUE && InSlateportBattleTent() != TRUE)
     {
         ConvertIntToDecimalStringN(StringCopy(gStringVar1, gText_IDNumber2), (u16)sMonSummaryScreen->summary.OTID, STR_CONV_MODE_LEADING_ZEROS, 5);
-        xPos = GetStringRightAlignXOffset(FONT_NORMAL, gStringVar1, 56);
-        //PrintTextOnWindow(AddWindowFromTemplateList(sPageInfoTemplate, PSS_DATA_WINDOW_INFO_ID), gStringVar1, xPos, 1, 0, 1);
+        xPos = start + GetStringCenterAlignXOffset(FONT_NORMAL,gStringVar1,width);
+        PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT, gStringVar1, xPos, 1, 0, 1);
     }
 }
 
