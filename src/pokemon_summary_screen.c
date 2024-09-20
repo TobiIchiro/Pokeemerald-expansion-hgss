@@ -2836,7 +2836,7 @@ static void PrintInfoPageText(void)
     int start = 82;
     int end = 143;
     int width = end - start;
-    //PrintMonDexNo
+    PrintMonDexNum(start, width);
     //PrintMonSpeciesName
     //PrintMonType
     PrintMonOTName(start, width);
@@ -2884,7 +2884,7 @@ static void PrintMonDexNum(int start, int width)
     int xPos;
     u16 dexNum = SpeciesToPokedexNum(sMonSummaryScreen->summary.species);
     const u8 gText_DexNum[] = _("Dex No.");
-    PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT, gText_DexNum, 7, 12, 0, 1);
+    PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT, gText_DexNum, 7, 8, 0, 1);
 
     if (dexNum != 0xFFFF)
     {
@@ -2892,23 +2892,21 @@ static void PrintMonDexNum(int start, int width)
         StringCopy(gStringVar1, &gText_NumberClear01[0]);
         ConvertIntToDecimalStringN(gStringVar2, dexNum, STR_CONV_MODE_LEADING_ZEROS, digitCount);
         StringAppend(gStringVar1, gStringVar2);
-        if (!IsMonShiny(&sMonSummaryScreen->currentMon))
-        {
-            PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT, gStringVar1, 0, 1, 0, 1);
-        }
-        else
-        {
-            PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT, gStringVar1, 0, 1, 0, 7);;
-        }
-        PutWindowTilemap(PSS_LABEL_WINDOW_LEFT);
+        
     }
     else
     {
         const u8 gText_FourMarks[] = _("????");
-        if (!IsMonShiny(&sMonSummaryScreen->currentMon))
-            SetMonPicBackgroundPalette(FALSE);
-        else
-            SetMonPicBackgroundPalette(TRUE);
+        StringAppend(gStringVar1, gText_FourMarks);
+    }
+    xPos = start + GetStringCenterAlignXOffset(FONT_NORMAL, gStringVar1,width);
+    if (!IsMonShiny(&sMonSummaryScreen->currentMon))
+    {
+        PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT, gStringVar1, xPos, 8, 0, 1);
+    }
+    else
+    {
+        PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT, gStringVar1, xPos, 8, 0, 7);;
     }
 
 }
