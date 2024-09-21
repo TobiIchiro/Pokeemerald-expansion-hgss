@@ -272,8 +272,10 @@ static void CreateTextPrinterTask(u8);
 static void PrintInfoPageText(void);
 static void Task_PrintInfoPage(u8);
 static void PrintMonDexNum(int start, int width);
+static void PrintMonSpeciesName(int start, int width);
 static void PrintMonOTName(int start, int width);
 static void PrintMonOTID(int start, int width);
+static void PrintMonExpPts(int start, int width);
 static void PrintMonAbilityName(void);
 static void PrintMonAbilityDescription(void);
 static void BufferMonTrainerMemo(void);
@@ -2833,21 +2835,21 @@ static void CreateTextPrinterTask(u8 pageIndex)
 
 static void PrintInfoPageText(void)
 {
-    int start = 82;
+    int start = 74;
     int end = 143;
     int width = end - start;
     PrintMonDexNum(start, width);
-    //PrintMonSpeciesName
+    PrintMonSpeciesName(start, width);
     //PrintMonType
     PrintMonOTName(start, width);
     PrintMonOTID(start, width);
-    //PrintMonExpPts
+    PrintMonExpPts(start, width);
     //PrintMonToNextLv
 }
 
 static void Task_PrintInfoPage(u8 taskId)
 {
-    int start = 82;
+    int start = 74;
     int end = 143;
     int width = end - start;
     s16 *data = gTasks[taskId].data;
@@ -2909,6 +2911,16 @@ static void PrintMonDexNum(int start, int width)
 
 }
 
+static void PrintMonSpeciesName(int start, int width)
+{
+    int xPos;
+    const u8 gText_Name[] = _("Name");
+    PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT,gText_Name,7,24,0,1);
+    xPos = start + GetStringCenterAlignXOffset(FONT_NORMAL,GetSpeciesName(sMonSummaryScreen->summary.species2),width);
+    PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT,GetSpeciesName(sMonSummaryScreen->summary.species2),xPos,24,0,1);
+
+}
+
 static void PrintMonOTName(int start, int width)
 {
     int x;
@@ -2934,6 +2946,26 @@ static void PrintMonOTID(int start, int width)
         xPos = start + GetStringCenterAlignXOffset(FONT_NORMAL,gStringVar1,width);
         PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT, gStringVar1, xPos, 72, 0, 1);
     }
+}
+
+static void PrintMonExpPts(int start, int width)
+{
+    int xPos;
+    const u8 gText_ExpPoints_2[] = _("Exp. Points");
+    const u8 gTextToNextLv[] = _("To Next Lv.");
+    struct PokeSummary *summary = &sMonSummaryScreen->summary;
+    PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT,gText_ExpPoints_2,7,88,0,1);
+    PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT,gTextToNextLv,7,104,0,1);
+    ConvertIntToDecimalStringN(gStringVar1, summary->exp, STR_CONV_MODE_RIGHT_ALIGN, 7);
+    xPos = start + GetStringCenterAlignXOffset(FONT_NORMAL,gStringVar1,width);
+    PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT,gStringVar1,xPos,88,0,1);
+    if(summary->level < MAX_LEVEL)
+        ConvertIntToDecimalStringN(gStringVar1,gExperienceTables[gSpeciesInfo[summary->species].growthRate][summary->level + 1] - summary->exp, STR_CONV_MODE_RIGHT_ALIGN,6);
+    else
+        ConvertIntToDecimalStringN(gStringVar1,0,STR_CONV_MODE_RIGHT_ALIGN,6);
+    
+    xPos = start + GetStringCenterAlignXOffset(FONT_NORMAL,gStringVar1,width);
+    PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT,gStringVar1,xPos,104,0,1);
 }
 
 static void PrintMonAbilityName(void)
@@ -3679,15 +3711,15 @@ static void SetMonTypeIcons(void)
     struct PokeSummary *summary = &sMonSummaryScreen->summary;
     if (summary->isEgg)
     {
-        SetTypeSpritePosAndPal(TYPE_MYSTERY, 120, 48, SPRITE_ARR_ID_TYPE);
+        SetTypeSpritePosAndPal(TYPE_MYSTERY, 74, 48, SPRITE_ARR_ID_TYPE);
         SetSpriteInvisibility(SPRITE_ARR_ID_TYPE + 1, TRUE);
     }
     else
     {
-        SetTypeSpritePosAndPal(gSpeciesInfo[summary->species].types[0], 120, 48, SPRITE_ARR_ID_TYPE);
+        SetTypeSpritePosAndPal(gSpeciesInfo[summary->species].types[0], 74, 48, SPRITE_ARR_ID_TYPE);
         if (gSpeciesInfo[summary->species].types[0] != gSpeciesInfo[summary->species].types[1])
         {
-            SetTypeSpritePosAndPal(gSpeciesInfo[summary->species].types[1], 160, 48, SPRITE_ARR_ID_TYPE + 1);
+            SetTypeSpritePosAndPal(gSpeciesInfo[summary->species].types[1], 74, 48, SPRITE_ARR_ID_TYPE + 1);
             SetSpriteInvisibility(SPRITE_ARR_ID_TYPE + 1, FALSE);
         }
         else
