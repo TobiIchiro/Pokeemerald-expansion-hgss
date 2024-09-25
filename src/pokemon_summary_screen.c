@@ -271,11 +271,11 @@ static void PrintPageSpecificText(u8);
 static void CreateTextPrinterTask(u8);
 static void PrintInfoPageText(void);
 static void Task_PrintInfoPage(u8);
-static void PrintMonDexNum(int start, int width);
-static void PrintMonSpeciesName(int start, int width);
-static void PrintMonOTName(int start, int width);
-static void PrintMonOTID(int start, int width);
-static void PrintMonExpPts(int start, int width);
+static void PrintMonDexNum(int start, int width, int yPos);
+static void PrintMonSpeciesName(int start, int width, int yPos);
+static void PrintMonOTName(int start, int width, int yPos);
+static void PrintMonOTID(int start, int width, int yPos);
+static void PrintMonExpPts(int start, int width, int yPos);
 static void PrintMonAbilityName(void);
 static void PrintMonAbilityDescription(void);
 static void BufferMonTrainerMemo(void);
@@ -463,6 +463,12 @@ static const u8 sTextColors[][3] =
     {0, 5, 6},
     {0, 7, 8}
 };
+
+#if P_SHOW_TERA_TYPE >= GEN_9
+    static const u8 yPosInfo[8] = {8,24,40,72,88,104,56};
+#else
+    static const u8 yPosInfo[8] = {8,24,40,56,72,88,56};
+#endif
 
 static const u8 sButtons_Gfx[][4 * TILE_SIZE_4BPP] = {
     INCBIN_U8("graphics/summary_screen/a_button.4bpp"),
@@ -2838,12 +2844,12 @@ static void PrintInfoPageText(void)
     int start = 74;
     int end = 143;
     int width = end - start;
-    PrintMonDexNum(start, width);
-    PrintMonSpeciesName(start, width);
+    PrintMonDexNum(start, width, yPosInfo[0]);
+    PrintMonSpeciesName(start, width, yPosInfo[1]);
     //PrintMonType
-    PrintMonOTName(start, width);
-    PrintMonOTID(start, width);
-    PrintMonExpPts(start, width);
+    PrintMonOTName(start, width, yPosInfo[3]);
+    PrintMonOTID(start, width, yPosInfo[4]);
+    PrintMonExpPts(start, width, yPosInfo[5]);
     //PrintMonToNextLv
 }
 
@@ -2857,10 +2863,10 @@ static void Task_PrintInfoPage(u8 taskId)
     switch (data[0])
     {
         case 1:
-            PrintMonOTName(start, width);
+            PrintMonOTName(start, width, yPosInfo[3]);
             break;
         case 2:
-            PrintMonOTID(start, width);
+            PrintMonOTID(start, width, yPosInfo[4]);
             break;
         case 3:
             PrintMonAbilityName();
@@ -2881,12 +2887,12 @@ static void Task_PrintInfoPage(u8 taskId)
     data[0]++;
 }
 
-static void PrintMonDexNum(int start, int width)
+static void PrintMonDexNum(int start, int width, int yPos)
 {
     int xPos;
     u16 dexNum = SpeciesToPokedexNum(sMonSummaryScreen->summary.species);
     const u8 gText_DexNum[] = _("Dex No.");
-    PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT, gText_DexNum, 7, 8, 0, 1);
+    PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT, gText_DexNum, 7, yPos, 0, 1);
 
     if (dexNum != 0xFFFF)
     {
@@ -2902,70 +2908,70 @@ static void PrintMonDexNum(int start, int width)
     xPos = start + GetStringCenterAlignXOffset(FONT_NORMAL, gStringVar1,width);
     if (!IsMonShiny(&sMonSummaryScreen->currentMon))
     {
-        PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT, gStringVar1, xPos, 8, 0, 1);
+        PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT, gStringVar1, xPos, yPos, 0, 0);
     }
     else
     {
-        PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT, gStringVar1, xPos, 8, 0, 7);;
+        PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT, gStringVar1, xPos, yPos, 0, 7);;
     }
 
 }
 
-static void PrintMonSpeciesName(int start, int width)
+static void PrintMonSpeciesName(int start, int width, int yPos)
 {
     int xPos;
     const u8 gText_Name[] = _("Name");
-    PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT,gText_Name,7,24,0,1);
+    PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT,gText_Name,7,yPos,0,1);
     xPos = start + GetStringCenterAlignXOffset(FONT_NORMAL,GetSpeciesName(sMonSummaryScreen->summary.species2),width);
-    PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT,GetSpeciesName(sMonSummaryScreen->summary.species2),xPos,24,0,1);
+    PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT,GetSpeciesName(sMonSummaryScreen->summary.species2),xPos,yPos,0,0);
 
 }
 
-static void PrintMonOTName(int start, int width)
+static void PrintMonOTName(int start, int width, int yPos)
 {
     int x;
     if (InBattleFactory() != TRUE && InSlateportBattleTent() != TRUE)
     {
-        PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT, gText_OTSlash, 7, 56, 0, 1);
+        PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT, gText_OTSlash, 7, yPos, 0, 1);
         x = start + GetStringCenterAlignXOffset(FONT_NORMAL, sMonSummaryScreen->summary.OTName,width);
         if (sMonSummaryScreen->summary.OTGender == 0)
-            PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT, sMonSummaryScreen->summary.OTName, x, 56, 0, 5);
+            PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT, sMonSummaryScreen->summary.OTName, x, yPos, 0, 5);
         else
-            PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT, sMonSummaryScreen->summary.OTName, x, 56, 0, 6);
+            PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT, sMonSummaryScreen->summary.OTName, x, yPos, 0, 6);
     }
 }
 
-static void PrintMonOTID(int start, int width)
+static void PrintMonOTID(int start, int width, int yPos)
 {
     int xPos;
     const u8 gText_IDNumber_2[] = _("ID No.");
     if (InBattleFactory() != TRUE && InSlateportBattleTent() != TRUE)
     {
-        PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT,gText_IDNumber_2,7,72,0,1);
+        PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT,gText_IDNumber_2,7,yPos,0,1);
         ConvertIntToDecimalStringN(gStringVar1, (u16)sMonSummaryScreen->summary.OTID, STR_CONV_MODE_LEADING_ZEROS, 5);
         xPos = start + GetStringCenterAlignXOffset(FONT_NORMAL,gStringVar1,width);
-        PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT, gStringVar1, xPos, 72, 0, 1);
+        PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT, gStringVar1, xPos, yPos, 0, 0);
     }
 }
 
-static void PrintMonExpPts(int start, int width)
+static void PrintMonExpPts(int start, int width, int yPos)
 {
     int xPos;
     const u8 gText_ExpPoints_2[] = _("Exp. Points");
     const u8 gTextToNextLv[] = _("To Next Lv.");
     struct PokeSummary *summary = &sMonSummaryScreen->summary;
-    PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT,gText_ExpPoints_2,7,88,0,1);
-    PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT,gTextToNextLv,7,104,0,1);
+    PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT,gText_ExpPoints_2,7,yPos,0,1);
+    PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT,gTextToNextLv,7,yPos + 16,0,1);
     ConvertIntToDecimalStringN(gStringVar1, summary->exp, STR_CONV_MODE_RIGHT_ALIGN, 7);
     xPos = start + GetStringCenterAlignXOffset(FONT_NORMAL,gStringVar1,width);
-    PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT,gStringVar1,xPos,88,0,1);
+    PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT,gStringVar1,xPos,88,0,0);
     if(summary->level < MAX_LEVEL)
         ConvertIntToDecimalStringN(gStringVar1,gExperienceTables[gSpeciesInfo[summary->species].growthRate][summary->level + 1] - summary->exp, STR_CONV_MODE_RIGHT_ALIGN,6);
     else
         ConvertIntToDecimalStringN(gStringVar1,0,STR_CONV_MODE_RIGHT_ALIGN,6);
     
     xPos = start + GetStringCenterAlignXOffset(FONT_NORMAL,gStringVar1,width);
-    PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT,gStringVar1,xPos,104,0,1);
+    PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT,gStringVar1,xPos,yPos + 16,0,0);
 }
 
 static void PrintMonAbilityName(void)
@@ -3716,6 +3722,8 @@ static void SetMonTypeIcons(void)
     }
     else
     {
+        u8 sText_Type[] = _("Type");
+        PrintTextOnWindow(PSS_LABEL_WINDOW_LEFT,sText_Type,7,yPosInfo[2],0,1);
         SetTypeSpritePosAndPal(gSpeciesInfo[summary->species].types[0], 74, 48, SPRITE_ARR_ID_TYPE);
         if (gSpeciesInfo[summary->species].types[0] != gSpeciesInfo[summary->species].types[1])
         {
