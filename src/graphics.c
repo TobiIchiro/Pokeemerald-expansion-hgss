@@ -1671,6 +1671,8 @@ const u32 gSummaryPage_BG_Tilemap_HGSS[]        = INCBIN_U32("graphics/summary_s
 const u32 gSummaryPage_Info_Tilemap_HGSS[]      = INCBIN_U32("graphics/summary_screen_hgss/page_info.bin.lz");
 const u32 gSummaryPage_Memo_Tilemap_HGSS[]      = INCBIN_U32("graphics/summary_screen_hgss/page_memo.bin.lz");
 const u32 gSummaryPage_Skills_Tilemap_HGSS[]      = INCBIN_U32("graphics/summary_screen_hgss/page_skills.bin.lz");
+const u32 gSummaryPage_BattleMoves_Tilemap_HGSS[]  = INCBIN_U32("graphics/summary_screen_hgss/page_battle_moves.bin.lz");
+const u32 gSummaryPage_ContestMoves_Tilemap_HGSS[] = INCBIN_U32("graphics/summary_screen_hgss/page_contest_moves.bin.lz");
 // Summary Screen HGSS END
 
 const u32 gBagMaleTiles[] = INCBIN_U32("graphics/bag/bag_male.4bpp.lz");

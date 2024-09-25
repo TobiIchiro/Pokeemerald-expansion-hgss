@@ -1985,6 +1985,8 @@ extern const u32 gSummaryPage_BG_Tilemap_HGSS[];
 extern const u32 gSummaryPage_Info_Tilemap_HGSS[];
 extern const u32 gSummaryPage_Memo_Tilemap_HGSS[];
 extern const u32 gSummaryPage_Skills_Tilemap_HGSS[];
+extern const u32 gSummaryPage_BattleMoves_Tilemap_HGSS[];
+extern const u32 gSummaryPage_ContestMoves_Tilemap_HGSS[];
 // Summary Screen HGSS END
 
 extern const u32 gMoveTypes_Gfx[];

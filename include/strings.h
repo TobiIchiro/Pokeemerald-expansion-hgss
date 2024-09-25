@@ -950,6 +950,7 @@ extern const u8 gText_NextFusionMon[];
 
 extern const u8 gText_LevelSymbol[];
 extern const u8 gText_PkmnInfo[];
+extern const u8 gText_PkmnMemo[];
 extern const u8 gText_PkmnSkills[];
 extern const u8 gText_BattleMoves[];
 extern const u8 gText_ContestMoves[];
@@ -972,6 +973,7 @@ extern const u8 gText_Accuracy2[];
 extern const u8 gText_Appeal[];
 extern const u8 gText_Jam[];
 extern const u8 gText_OTSlash[];
+extern const u8 gText_OT[];
 extern const u8 gText_IDNumber2[];
 extern const u8 gText_XNature[];
 extern const u8 gText_XNatureHatchedAtYZ[];
