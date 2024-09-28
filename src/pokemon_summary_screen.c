@@ -2879,10 +2879,6 @@ static void PutPageWindowTilemaps(u8 page)
     {
     case PSS_PAGE_INFO:
         PutWindowTilemap(PSS_LABEL_WINDOW_POKEMON_INFO_TITLE);
-        //PutWindowTilemap(PSS_LABEL_WINDOW_PROMPT_CANCEL);
-        if (InBattleFactory() == TRUE || InSlateportBattleTent() == TRUE)
-            //PutWindowTilemap(PSS_LABEL_WINDOW_POKEMON_INFO_RENTAL);
-        //PutWindowTilemap(PSS_LABEL_WINDOW_POKEMON_INFO_TYPE);
         break;
     case PSS_PAGE_MEMO:
         PutWindowTilemap(PSS_LABEL_WINDOW_POKEMON_MEMO_TITLE);
