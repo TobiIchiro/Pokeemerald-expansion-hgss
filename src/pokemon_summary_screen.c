@@ -3388,42 +3388,62 @@ static void PrintAtk(u8 yPos, u8 windowId)
     u8 x = 23;
     u8 colorId = SetStatColorId(STAT_ATK);
     PrintTextOnWindow(windowId,gText_Attack_Skills, x, yPos, 0, colorId);
+    u8 start = 78, end = 128, width = end - start;
     ConvertIntToDecimalStringN(gStringVar1,sMonSummaryScreen->summary.atk,0,3);
+    x = start + GetStringRightAlignXOffset(FONT_NORMAL, gStringVar1, width);
+    PrintTextOnWindow(windowId, gStringVar1, x, yPos, 0, 0);
+    
 }
 static void PrintDef(u8 yPos, u8 windowId)
 {
     u8 x = 23;
     u8 colorId = SetStatColorId(STAT_DEF);
     PrintTextOnWindow(windowId,gText_Defense_Skills, x, yPos, 0,colorId);
+    u8 start = 78, end = 128, width = end - start;
+    ConvertIntToDecimalStringN(gStringVar1,sMonSummaryScreen->summary.def,0,3);
+    x = start + GetStringRightAlignXOffset(FONT_NORMAL, gStringVar1, width);
+    PrintTextOnWindow(windowId, gStringVar1, x, yPos, 0, 0);
 }
 static void PrintSpA(u8 yPos, u8 windowId)
 {
     u8 x = 23;
     u8 colorId = SetStatColorId(STAT_SPATK);
     PrintTextOnWindow(windowId,gText_SpAtk_Skills, x, yPos, 0,colorId);
+    u8 start = 78, end = 128, width = end - start;
+    ConvertIntToDecimalStringN(gStringVar1,sMonSummaryScreen->summary.spatk,0,3);
+    x = start + GetStringRightAlignXOffset(FONT_NORMAL, gStringVar1, width);
+    PrintTextOnWindow(windowId, gStringVar1, x, yPos, 0, 0);
 }
 static void PrintSpD(u8 yPos, u8 windowId)
 {
     u8 x = 23;
     u8 colorId = SetStatColorId(STAT_SPDEF);
     PrintTextOnWindow(windowId,gText_SpDef_Skills, x, yPos, 0,colorId);
+    u8 start = 78, end = 128, width = end - start;
+    ConvertIntToDecimalStringN(gStringVar1,sMonSummaryScreen->summary.spdef,0,3);
+    x = start + GetStringRightAlignXOffset(FONT_NORMAL, gStringVar1, width);
+    PrintTextOnWindow(windowId, gStringVar1, x, yPos, 0, 0);
 }
 static void PrintSpe(u8 yPos, u8 windowId)
 {
     u8 x = 23;
     u8 colorId = SetStatColorId(STAT_SPEED);
     PrintTextOnWindow(windowId,gText_Speed_Skills, x, yPos, 0,colorId);
+    u8 start = 78, end = 128, width = end - start;
+    ConvertIntToDecimalStringN(gStringVar1,sMonSummaryScreen->summary.speed,0,3);
+    x = start + GetStringRightAlignXOffset(FONT_NORMAL, gStringVar1, width);
+    PrintTextOnWindow(windowId, gStringVar1, x, yPos, 0, 0);
 }
 static u8 SetStatColorId(u8 statIndex)
 {
     if (!SUMMARY_SCREEN_NATURE_COLORS || gNaturesInfo[sMonSummaryScreen->summary.mintNature].statUp == gNaturesInfo[sMonSummaryScreen->summary.mintNature].statDown)
         return 0;
     else if (statIndex == gNaturesInfo[sMonSummaryScreen->summary.mintNature].statUp)
-        return 8;
-    else if (statIndex == gNaturesInfo[sMonSummaryScreen->summary.mintNature].statDown)
         return 5;
+    else if (statIndex == gNaturesInfo[sMonSummaryScreen->summary.mintNature].statDown)
+        return 8;
     else
-        return 0;
+        return 1;
 }
 
 
@@ -3463,8 +3483,6 @@ static void PrintHeldItemName(void)
         text = gStringVar1;
     }
     fontId = GetFontIdToFit(text, FONT_NORMAL, 0, WindowTemplateWidthPx(&sSummaryTemplate[PSS_LABEL_WINDOW_PORTRAIT_ITEM]));
-    //x = GetString
-    //x = GetStringCenterAlignXOffset(fontId, text, 80) + 6;
     PrintTextOnWindowWithFont(PSS_LABEL_WINDOW_PORTRAIT_ITEM, text, 8, 17, 0, 0, fontId);
 }
 
