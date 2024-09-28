@@ -966,6 +966,7 @@ extern const u8 gText_Defense_Skills[];
 extern const u8 gText_SpAtk_Skills[];
 extern const u8 gText_SpDef_Skills[];
 extern const u8 gText_Speed_Skills[];
+extern const u8 gText_Ability[];
 
 extern const u8 gText_HMMovesCantBeForgotten2[];
 extern const u8 gText_Info[];

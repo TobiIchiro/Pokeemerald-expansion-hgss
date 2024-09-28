@@ -534,6 +534,7 @@ const u8 gText_Defense_Skills[] = _("Defense");
 const u8 gText_SpAtk_Skills[] = _("Sp. Atk");
 const u8 gText_SpDef_Skills[] = _("Sp. Def");
 const u8 gText_Speed_Skills[] = _("Speed");
+const u8 gText_Ability[] = _("Ability");
 const u8 gText_Info[] = _("INFO");
 const u8 gText_EggWillTakeALongTime[] = _("It looks like this EGG will\ntake a long time to hatch.");
 const u8 gText_EggWillTakeSomeTime[] = _("What will hatch from this?\nIt will take some time.");
