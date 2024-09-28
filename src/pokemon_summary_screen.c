@@ -258,6 +258,7 @@ static void PrintMonTrainerMemo(void);
 static void BufferNatureString(void);
 static void GetMetLevelString(u8 *);
 static void FavoriteFlavor(void);
+static void BufferCharacteristic(void);
 static bool8 DoesMonOTMatchOwner(void);
 static bool8 DidMonComeFromGBAGames(void);
 static bool8 IsInGamePartnerMon(void);
@@ -3235,7 +3236,7 @@ static void BufferMonTrainerMemo(void)
 
 static void PrintMonTrainerMemo(void)
 {
-    PrintTextOnWindow(AddWindowFromTemplateList(sPageMemoTemplate, PSS_DATA_WINDOW_INFO), gStringVar4, 10, 4, 0, 0);
+    PrintTextOnWindow(AddWindowFromTemplateList(sPageMemoTemplate, PSS_DATA_WINDOW_INFO), gStringVar4, 10, 8, 0, 0);
 }
 
 static void BufferNatureString(void)
@@ -3283,6 +3284,47 @@ static void FavoriteFlavor(void)
         text = gText_Nothing_Memo;
     }
     DynamicPlaceholderTextUtil_SetPlaceholderPtr(7, text);
+}
+
+static void BufferCharacteristic(void)
+{
+    struct PokeSummary *sum = &sMonSummaryScreen->summary;
+    struct Pokemon *mon = &sMonSummaryScreen->currentMon;
+    u8 index, highestIV, highestValue, i, j;
+    u8 iv[6];
+    u8 ties[6] = { 0, 0, 0, 0, 0, 0 };
+
+    iv[0] = GetMonData(mon, MON_DATA_HP_IV);
+    iv[1] = GetMonData(mon, MON_DATA_ATK_IV);
+    iv[2] = GetMonData(mon, MON_DATA_DEF_IV);
+    iv[3] = GetMonData(mon, MON_DATA_SPEED_IV);
+    iv[4] = GetMonData(mon, MON_DATA_SPATK_IV);
+    iv[5] = GetMonData(mon, MON_DATA_SPDEF_IV);
+    index = sum->pid % 6;
+
+    highestValue = iv[0];
+    for(i = 0; i < 6; i++)
+    {
+        if(iv[i] > highestValue)
+        {
+            highestValue = iv[i];
+            ties[i] = i + 1;
+        }
+        else if(iv[i] == highestValue)
+        {
+            ties[i] = i + 1;
+        }
+    }
+
+    for (i = 0; i < 6; i++)
+    {
+        if (ties[(index + i) % 6] != 0)
+        {
+            highestIV = ties[(index + i) % 6] - 1;
+            break;
+        }
+    }
+    //DynamicPlaceholderTextUtil_SetPlaceholderPtr(6, gCharacteristicList[(highestValue % 5) * 6 + highestIV]);
 }
 
 static bool8 DoesMonOTMatchOwner(void)
