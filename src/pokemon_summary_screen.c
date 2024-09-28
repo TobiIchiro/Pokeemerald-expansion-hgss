@@ -272,6 +272,7 @@ static void PrintDef(u8 yPos, u8 windowId);
 static void PrintSpA(u8 yPos, u8 windowId);
 static void PrintSpD(u8 yPos, u8 windowId);
 static void PrintSpe(u8 yPos, u8 windowId);
+static u8 SetStatColorId(u8 statIndex);
 static void PrintMonAbilityName(void);
 static void PrintMonAbilityDescription(void);
 static void PrintRibbonCount(void);
@@ -3377,41 +3378,45 @@ static void PrintHP(u8 yPos, u8 windowId)
     StringAppend(gStringVar1, gText_Slash);
     ConvertIntToDecimalStringN(gStringVar2, sMonSummaryScreen->summary.maxHP,0,3);
     StringAppend(gStringVar1,gStringVar2);
-    //start = 78, end = 136, width = end - start
-    //x = start + GetStringRightAlignXOffset(FONT_NORMAL, gStringVar1, width);
-    PrintTextOnWindow(windowId, gStringVar1, x + 30, yPos, 0, 0);
+    start = 78, end = 136, width = end - start;
+    x = start + GetStringRightAlignXOffset(FONT_NORMAL, gStringVar1, width);
+    PrintTextOnWindow(windowId, gStringVar1, x, yPos, 0, 0);
 
 }
 static void PrintAtk(u8 yPos, u8 windowId)
 {
     u8 x = 23;
-    u8 colorId = 0;
+    u8 colorId = SetStatColorId(STAT_ATK);
     PrintTextOnWindow(windowId,gText_Attack_Skills, x, yPos, 0, colorId);
     ConvertIntToDecimalStringN(gStringVar1,sMonSummaryScreen->summary.atk,0,3);
 }
 static void PrintDef(u8 yPos, u8 windowId)
 {
     u8 x = 23;
-    PrintTextOnWindow(windowId,gText_Defense_Skills, x, yPos, 0,0);
+    u8 colorId = SetStatColorId(STAT_DEF);
+    PrintTextOnWindow(windowId,gText_Defense_Skills, x, yPos, 0,colorId);
 }
 static void PrintSpA(u8 yPos, u8 windowId)
 {
     u8 x = 23;
-    PrintTextOnWindow(windowId,gText_SpAtk_Skills, x, yPos, 0,0);
+    u8 colorId = SetStatColorId(STAT_SPATK);
+    PrintTextOnWindow(windowId,gText_SpAtk_Skills, x, yPos, 0,colorId);
 }
 static void PrintSpD(u8 yPos, u8 windowId)
 {
     u8 x = 23;
-    PrintTextOnWindow(windowId,gText_SpDef_Skills, x, yPos, 0,0);
+    u8 colorId = SetStatColorId(STAT_SPDEF);
+    PrintTextOnWindow(windowId,gText_SpDef_Skills, x, yPos, 0,colorId);
 }
 static void PrintSpe(u8 yPos, u8 windowId)
 {
     u8 x = 23;
-    PrintTextOnWindow(windowId,gText_Speed_Skills, x, yPos, 0,0);
+    u8 colorId = SetStatColorId(STAT_SPEED);
+    PrintTextOnWindow(windowId,gText_Speed_Skills, x, yPos, 0,colorId);
 }
-/*static u8 SetStatColorId(u8 statIndex, u32 stat)
+static u8 SetStatColorId(u8 statIndex)
 {
-    if (statIndex == 0 || !SUMMARY_SCREEN_NATURE_COLORS || gNaturesInfo[sMonSummaryScreen->summary.mintNature].statUp == gNaturesInfo[sMonSummaryScreen->summary.mintNature].statDown)
+    if (!SUMMARY_SCREEN_NATURE_COLORS || gNaturesInfo[sMonSummaryScreen->summary.mintNature].statUp == gNaturesInfo[sMonSummaryScreen->summary.mintNature].statDown)
         return 0;
     else if (statIndex == gNaturesInfo[sMonSummaryScreen->summary.mintNature].statUp)
         return 8;
@@ -3419,7 +3424,7 @@ static void PrintSpe(u8 yPos, u8 windowId)
         return 5;
     else
         return 0;
-}*/
+}
 
 
 static void PrintMonAbilityName(void)
