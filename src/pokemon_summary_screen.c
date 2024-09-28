@@ -257,6 +257,7 @@ static void BufferMonTrainerMemo(void);
 static void PrintMonTrainerMemo(void);
 static void BufferNatureString(void);
 static void GetMetLevelString(u8 *);
+static void FavoriteFlavor(void);
 static bool8 DoesMonOTMatchOwner(void);
 static bool8 DidMonComeFromGBAGames(void);
 static bool8 IsInGamePartnerMon(void);
@@ -3224,6 +3225,7 @@ static void BufferMonTrainerMemo(void)
         {
             text = gText_XNatureObtainedInTrade;
         }
+        FavoriteFlavor();
 
         DynamicPlaceholderTextUtil_ExpandPlaceholders(gStringVar4, text);
         Free(metLevelString);
@@ -3233,7 +3235,7 @@ static void BufferMonTrainerMemo(void)
 
 static void PrintMonTrainerMemo(void)
 {
-    PrintTextOnWindow(AddWindowFromTemplateList(sPageInfoTemplate, PSS_DATA_WINDOW_INFO), gStringVar4, 0, 1, 0, 0);
+    PrintTextOnWindow(AddWindowFromTemplateList(sPageMemoTemplate, PSS_DATA_WINDOW_INFO), gStringVar4, 10, 4, 0, 0);
 }
 
 static void BufferNatureString(void)
@@ -3250,6 +3252,37 @@ static void GetMetLevelString(u8 *output)
         level = EGG_HATCH_LEVEL;
     ConvertIntToDecimalStringN(output, level, STR_CONV_MODE_LEFT_ALIGN, 3);
     DynamicPlaceholderTextUtil_SetPlaceholderPtr(3, output);
+}
+
+static void FavoriteFlavor(void)
+{
+
+    struct PokemonSummaryScreenData *sumStruct = sMonSummaryScreen;
+    const u8 *text;
+    switch (gNaturesInfo[sumStruct->summary.nature].flavor)
+    {
+    case LIKE_FLAVOR_NONE:
+        text = gText_Nothing_Memo;
+        break;
+    case LIKE_FLAVOR_SPICY:
+        text = gText_Spicy_Memo;
+        break;
+    case LIKE_FLAVOR_DRY:
+        text = gText_Dry_Memo;
+        break;
+    case LIKE_FLAVOR_SWEET:
+        text = gText_Sweet_Memo;
+        break;
+    case LIKE_FLAVOR_BITTER:
+        text = gText_Bitter_Memo;
+        break;
+    case LIKE_FLAVOR_SOUR:
+        text = gText_Sour_Memo;
+        break;
+    default:
+        text = gText_Nothing_Memo;
+    }
+    DynamicPlaceholderTextUtil_SetPlaceholderPtr(7, text);
 }
 
 static bool8 DoesMonOTMatchOwner(void)
@@ -3366,12 +3399,43 @@ static void PrintEggMemo(void)
 
 static void PrintMemoPageText()
 {
+    u8 windowId = AddWindowFromTemplateList(sPageMemoTemplate, PSS_DATA_WINDOW_INFO);
+    BufferMonTrainerMemo();
+    PrintMonTrainerMemo();
+    /*
+        PrintNature()
+        PrintMetLocation()
+        PrintMetLevel()
+        PrintCharacteristic()
+        PrintLikedFlavor()
 
+    */
 }
 
 static void Task_PrintMemoPage(u8 taskId)
 {
+    s16 *data = gTasks[taskId].data;
+    u8 windowId = AddWindowFromTemplateList(sPageMemoTemplate, PSS_DATA_WINDOW_INFO);
 
+    switch (data[0])
+    {
+        case 1:
+            BufferMonTrainerMemo();
+            break;
+        case 2:
+            PrintMonTrainerMemo();
+            break;  
+        case 3:
+            //
+            break;;
+        case 4:
+            //
+            break;;
+        case 5:
+            DestroyTask(taskId);
+            return;
+    }
+    data[0]++;
 }
 
 static void PrintSkillsPageText(void)
