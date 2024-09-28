@@ -3377,6 +3377,8 @@ static void PrintHP(u8 yPos, u8 windowId)
     StringAppend(gStringVar1, gText_Slash);
     ConvertIntToDecimalStringN(gStringVar2, sMonSummaryScreen->summary.maxHP,0,3);
     StringAppend(gStringVar1,gStringVar2);
+    //start = 78, end = 136, width = end - start
+    //x = start + GetStringRightAlignXOffset(FONT_NORMAL, gStringVar1, width);
     PrintTextOnWindow(windowId, gStringVar1, x + 30, yPos, 0, 0);
 
 }
