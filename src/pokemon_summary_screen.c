@@ -3373,11 +3373,19 @@ static void PrintHP(u8 yPos, u8 windowId)
     u8 start = 20, end = 77, width = end - start;
     u8 x = start + GetStringCenterAlignXOffset(FONT_NORMAL, gText_HP_Skills, width);
     PrintTextOnWindow(windowId,gText_HP_Skills, x, yPos, 0,0);
+    ConvertIntToDecimalStringN(gStringVar1,sMonSummaryScreen->summary.currentHP,0,3);
+    StringAppend(gStringVar1, gText_Slash);
+    ConvertIntToDecimalStringN(gStringVar2, sMonSummaryScreen->summary.maxHP,0,3);
+    StringAppend(gStringVar1,gStringVar2);
+    PrintTextOnWindow(windowId, gStringVar1, x + 30, yPos, 0, 0);
+
 }
 static void PrintAtk(u8 yPos, u8 windowId)
 {
     u8 x = 23;
-    PrintTextOnWindow(windowId,gText_Attack_Skills, x, yPos, 0,0);
+    u8 colorId = 0;
+    PrintTextOnWindow(windowId,gText_Attack_Skills, x, yPos, 0, colorId);
+    ConvertIntToDecimalStringN(gStringVar1,sMonSummaryScreen->summary.atk,0,3);
 }
 static void PrintDef(u8 yPos, u8 windowId)
 {
@@ -3399,6 +3407,18 @@ static void PrintSpe(u8 yPos, u8 windowId)
     u8 x = 23;
     PrintTextOnWindow(windowId,gText_Speed_Skills, x, yPos, 0,0);
 }
+/*static u8 SetStatColorId(u8 statIndex, u32 stat)
+{
+    if (statIndex == 0 || !SUMMARY_SCREEN_NATURE_COLORS || gNaturesInfo[sMonSummaryScreen->summary.mintNature].statUp == gNaturesInfo[sMonSummaryScreen->summary.mintNature].statDown)
+        return 0;
+    else if (statIndex == gNaturesInfo[sMonSummaryScreen->summary.mintNature].statUp)
+        return 8;
+    else if (statIndex == gNaturesInfo[sMonSummaryScreen->summary.mintNature].statDown)
+        return 5;
+    else
+        return 0;
+}*/
+
 
 static void PrintMonAbilityName(void)
 {
