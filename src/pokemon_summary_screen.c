@@ -78,16 +78,9 @@ enum {
 #define PSS_LABEL_WINDOW_END                12
 
 //Dynamic fields for Pokémon Info Page
-#define TEST TRUE
-#if TEST
-  #define PSS_DATA_WINDOW_INFO      0
-#else
-    #define PSS_DATA_WINDOW_INFO_ORIGINAL_TRAINER 0
-    #define PSS_DATA_WINDOW_INFO_ID 1
-    #define PSS_DATA_WINDOW_INFO_ABILITY 2
-    #define PSS_DATA_WINDOW_INFO_MEMO 3
+#define PSS_DATA_WINDOW_INFO    0
 
-#endif
+#define PSS_DATA_WINDOW_MEMO    0
 
 // Dynamic fields for the Pokémon Skills page
 #define PSS_DATA_WINDOW_SKILLS_HELD_ITEM 0
@@ -511,6 +504,19 @@ static const struct WindowTemplate sPageInfoTemplate[] =
         .baseBlock = 239,
     }
 };
+static const struct WindowTemplate sPageMemoTemplate[] =
+{
+    [PSS_DATA_WINDOW_MEMO] = {
+        .bg = 0,
+        .tilemapLeft = 0,
+        .tilemapTop = 1,
+        .width = 19,
+        .height = 19,
+        .paletteNum = 6,
+        .baseBlock = 239,
+    }
+};
+
 static const struct WindowTemplate sPageSkillsTemplate[] =
 {
     [PSS_DATA_WINDOW_SKILLS_HELD_ITEM] = {
