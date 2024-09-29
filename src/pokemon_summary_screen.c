@@ -3564,7 +3564,7 @@ static u8 SetStatColorId(u8 statIndex)
     else if (statIndex == gNaturesInfo[sMonSummaryScreen->summary.mintNature].statUp)
         return 5;
     else if (statIndex == gNaturesInfo[sMonSummaryScreen->summary.mintNature].statDown)
-        return 8;
+        return 6;
     else
         return 0;
 }
