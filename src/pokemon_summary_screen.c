@@ -49,6 +49,7 @@
 #include "constants/region_map_sections.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
+#include "data/text/characteristics.h"
 
 enum {
     PSS_PAGE_INFO,
@@ -77,9 +78,10 @@ enum {
 #define PSS_LABEL_WINDOW_PORTRAIT_ITEM      11
 #define PSS_LABEL_WINDOW_END                12
 
-//Left window where data is printed
-#define PSS_DATA_WINDOW_INFO      0
+//Dynamic fields for Pokémon Info Page
+#define PSS_DATA_WINDOW_INFO    0
 
+#define PSS_DATA_WINDOW_MEMO    0
 
 // Dynamic fields for the Pokémon Skills page
 #define PSS_DATA_WINDOW_SKILLS_HELD_ITEM 0
@@ -255,6 +257,8 @@ static void BufferMonTrainerMemo(void);
 static void PrintMonTrainerMemo(void);
 static void BufferNatureString(void);
 static void GetMetLevelString(u8 *);
+static void FavoriteFlavor(void);
+static void BufferCharacteristic(void);
 static bool8 DoesMonOTMatchOwner(void);
 static bool8 DidMonComeFromGBAGames(void);
 static bool8 IsInGamePartnerMon(void);
@@ -510,6 +514,19 @@ static const struct WindowTemplate sPageInfoTemplate[] =
         .baseBlock = 239,
     }
 };
+static const struct WindowTemplate sPageMemoTemplate[] =
+{
+    [PSS_DATA_WINDOW_MEMO] = {
+        .bg = 0,
+        .tilemapLeft = 0,
+        .tilemapTop = 1,
+        .width = 19,
+        .height = 19,
+        .paletteNum = 6,
+        .baseBlock = 239,
+    }
+};
+
 static const struct WindowTemplate sPageSkillsTemplate[] =
 {
     [PSS_DATA_WINDOW_INFO] = {
@@ -3133,7 +3150,8 @@ static void BufferMonTrainerMemo(void)
     DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, sMemoNatureTextColor);
     DynamicPlaceholderTextUtil_SetPlaceholderPtr(1, sMemoMiscTextColor);
     BufferNatureString();
-
+    BufferCharacteristic();
+    FavoriteFlavor();
     if (InBattleFactory() == TRUE || InSlateportBattleTent() == TRUE || IsInGamePartnerMon() == TRUE)
     {
         DynamicPlaceholderTextUtil_ExpandPlaceholders(gStringVar4, gText_XNature);
@@ -3169,6 +3187,7 @@ static void BufferMonTrainerMemo(void)
         {
             text = gText_XNatureObtainedInTrade;
         }
+        
 
         DynamicPlaceholderTextUtil_ExpandPlaceholders(gStringVar4, text);
         Free(metLevelString);
@@ -3178,7 +3197,7 @@ static void BufferMonTrainerMemo(void)
 
 static void PrintMonTrainerMemo(void)
 {
-    PrintTextOnWindow(AddWindowFromTemplateList(sPageInfoTemplate, PSS_DATA_WINDOW_INFO), gStringVar4, 0, 1, 0, 0);
+    PrintTextOnWindow(AddWindowFromTemplateList(sPageMemoTemplate, PSS_DATA_WINDOW_INFO), gStringVar4, 10, 8, 0, 0);
 }
 
 static void BufferNatureString(void)
@@ -3195,6 +3214,79 @@ static void GetMetLevelString(u8 *output)
         level = EGG_HATCH_LEVEL;
     ConvertIntToDecimalStringN(output, level, STR_CONV_MODE_LEFT_ALIGN, 3);
     DynamicPlaceholderTextUtil_SetPlaceholderPtr(3, output);
+}
+
+static void FavoriteFlavor(void)
+{
+
+    struct PokemonSummaryScreenData *sumStruct = sMonSummaryScreen;
+    const u8 *text;
+    switch (gNaturesInfo[sumStruct->summary.nature].flavor)
+    {
+    case LIKE_FLAVOR_NONE:
+        text = gText_Nothing_Memo;
+        break;
+    case LIKE_FLAVOR_SPICY:
+        text = gText_Spicy_Memo;
+        break;
+    case LIKE_FLAVOR_DRY:
+        text = gText_Dry_Memo;
+        break;
+    case LIKE_FLAVOR_SWEET:
+        text = gText_Sweet_Memo;
+        break;
+    case LIKE_FLAVOR_BITTER:
+        text = gText_Bitter_Memo;
+        break;
+    case LIKE_FLAVOR_SOUR:
+        text = gText_Sour_Memo;
+        break;
+    default:
+        text = gText_EmptyString2;
+    }
+    DynamicPlaceholderTextUtil_SetPlaceholderPtr(7, text);
+    
+}
+
+static void BufferCharacteristic(void)
+{
+    struct PokeSummary *sum = &sMonSummaryScreen->summary;
+    struct Pokemon *mon = &sMonSummaryScreen->currentMon;
+    u8 index, highestIV, highestValue, i, j;
+    u8 iv[6];
+    u8 ties[6] = { 0, 0, 0, 0, 0, 0 };
+
+    iv[0] = GetMonData(mon, MON_DATA_HP_IV);
+    iv[1] = GetMonData(mon, MON_DATA_ATK_IV);
+    iv[2] = GetMonData(mon, MON_DATA_DEF_IV);
+    iv[3] = GetMonData(mon, MON_DATA_SPEED_IV);
+    iv[4] = GetMonData(mon, MON_DATA_SPATK_IV);
+    iv[5] = GetMonData(mon, MON_DATA_SPDEF_IV);
+    index = sum->pid % 6;
+    highestIV = 0;
+    highestValue = iv[0];
+    for(i = 0; i < 6; i++)
+    {
+        if(iv[i] > highestValue)
+        {
+            highestValue = iv[i];
+            ties[i] = i + 1;
+        }
+        else if(iv[i] == highestValue)
+        {
+            ties[i] = i + 1;
+        }
+    }
+
+    for (i = 0; i < 6; i++)
+    {
+        if (ties[(index + i) % 6] != 0)
+        {
+            highestIV = ties[(index + i) % 6] - 1;
+            break;
+        }
+    }
+    DynamicPlaceholderTextUtil_SetPlaceholderPtr(6, gCharacteristics[(highestValue % 5) * 6 + highestIV]);
 }
 
 static bool8 DoesMonOTMatchOwner(void)
@@ -3311,12 +3403,43 @@ static void PrintEggMemo(void)
 
 static void PrintMemoPageText()
 {
+    u8 windowId = AddWindowFromTemplateList(sPageMemoTemplate, PSS_DATA_WINDOW_INFO);
+    BufferMonTrainerMemo();
+    PrintMonTrainerMemo();
+    /*
+        PrintNature()
+        PrintMetLocation()
+        PrintMetLevel()
+        PrintCharacteristic()
+        PrintLikedFlavor()
 
+    */
 }
 
 static void Task_PrintMemoPage(u8 taskId)
 {
+    s16 *data = gTasks[taskId].data;
+    u8 windowId = AddWindowFromTemplateList(sPageMemoTemplate, PSS_DATA_WINDOW_INFO);
 
+    switch (data[0])
+    {
+        case 1:
+            BufferMonTrainerMemo();
+            break;
+        case 2:
+            PrintMonTrainerMemo();
+            break;  
+        case 3:
+            //
+            break;;
+        case 4:
+            //
+            break;;
+        case 5:
+            DestroyTask(taskId);
+            return;
+    }
+    data[0]++;
 }
 
 static void PrintSkillsPageText(void)
@@ -3976,7 +4099,7 @@ static void SetMonTypeIcons(void)
         {
             x = start + (width - 2 * 32 - 5)/2;//32 Width of Type sprite
             SetTypeSpritePosAndPal(gSpeciesInfo[summary->species].types[0], x, 47, SPRITE_ARR_ID_TYPE);
-            SetTypeSpritePosAndPal(gSpeciesInfo[summary->species].types[1], x + 5, 47, SPRITE_ARR_ID_TYPE + 1);
+            SetTypeSpritePosAndPal(gSpeciesInfo[summary->species].types[1], x + 32 + 5, 47, SPRITE_ARR_ID_TYPE + 1);
             SetSpriteInvisibility(SPRITE_ARR_ID_TYPE + 1, FALSE);
         }
         else

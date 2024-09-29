@@ -382,6 +382,7 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
         .battlePalacePercents = PALACE_STYLE(61, 7, 61, 7), //32% support >= 50% HP, 32% support < 50% HP
         .battlePalaceFlavorText = B_MSG_EAGER_FOR_MORE,
         .battlePalaceSmokescreen = PALACE_TARGET_STRONGER,
+        .flavor = LIKE_FLAVOR_NONE,
     },
     [NATURE_LONELY] =
     {
@@ -394,6 +395,7 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
         .battlePalacePercents = PALACE_STYLE(20, 25, 84, 8), //55%,  8%
         .battlePalaceFlavorText = B_MSG_GLINT_IN_EYE,
         .battlePalaceSmokescreen = PALACE_TARGET_STRONGER,
+        .flavor = LIKE_FLAVOR_SPICY,
     },
     [NATURE_BRAVE] =
     {
@@ -406,6 +408,7 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
         .battlePalacePercents = PALACE_STYLE(70, 15, 32, 60), //15%, 8%
         .battlePalaceFlavorText = B_MSG_GETTING_IN_POS,
         .battlePalaceSmokescreen = PALACE_TARGET_WEAKER,
+        .flavor = LIKE_FLAVOR_SPICY,
     },
     [NATURE_ADAMANT] =
     {
@@ -418,6 +421,7 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
         .battlePalacePercents = PALACE_STYLE(38, 31, 70, 15), //31%, 15%
         .battlePalaceFlavorText = B_MSG_GLINT_IN_EYE,
         .battlePalaceSmokescreen = PALACE_TARGET_STRONGER,
+        .flavor = LIKE_FLAVOR_SPICY,
     },
     [NATURE_NAUGHTY] =
     {
@@ -430,6 +434,7 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
         .battlePalacePercents = PALACE_STYLE(20, 70, 70, 22), //10%, 8%
         .battlePalaceFlavorText = B_MSG_GLINT_IN_EYE,
         .battlePalaceSmokescreen = PALACE_TARGET_WEAKER,
+        .flavor = LIKE_FLAVOR_SPICY,
     },
     [NATURE_BOLD] =
     {
@@ -442,6 +447,7 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
         .battlePalacePercents = PALACE_STYLE(30, 20, 32, 58), //50%, 10%
         .battlePalaceFlavorText = B_MSG_GETTING_IN_POS,
         .battlePalaceSmokescreen = PALACE_TARGET_WEAKER,
+        .flavor = LIKE_FLAVOR_SOUR,
     },
     [NATURE_DOCILE] =
     {
@@ -454,6 +460,7 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
         .battlePalacePercents = PALACE_STYLE(56, 22, 56, 22), //22%, 22%
         .battlePalaceFlavorText = B_MSG_EAGER_FOR_MORE,
         .battlePalaceSmokescreen = PALACE_TARGET_RANDOM,
+        .flavor = LIKE_FLAVOR_NONE,
     },
     [NATURE_RELAXED] =
     {
@@ -466,6 +473,7 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
         .battlePalacePercents = PALACE_STYLE(25, 15, 75, 15), //60%, 10%
         .battlePalaceFlavorText = B_MSG_GLINT_IN_EYE,
         .battlePalaceSmokescreen = PALACE_TARGET_STRONGER,
+        .flavor = LIKE_FLAVOR_SOUR,
     },
     [NATURE_IMPISH] =
     {
@@ -478,6 +486,7 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
         .battlePalacePercents = PALACE_STYLE(69, 6, 28, 55), //25%, 17%
         .battlePalaceFlavorText = B_MSG_GETTING_IN_POS,
         .battlePalaceSmokescreen = PALACE_TARGET_STRONGER,
+        .flavor = LIKE_FLAVOR_SOUR,
     },
     [NATURE_LAX] =
     {
@@ -490,6 +499,7 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
         .battlePalacePercents = PALACE_STYLE(35, 10, 29, 6), //55%, 65%
         .battlePalaceFlavorText = B_MSG_GROWL_DEEPLY,
         .battlePalaceSmokescreen = PALACE_TARGET_STRONGER,
+        .flavor = LIKE_FLAVOR_SOUR,
     },
     [NATURE_TIMID] =
     {
@@ -502,6 +512,7 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
         .battlePalacePercents = PALACE_STYLE(62, 10, 30, 20), //28%, 50%
         .battlePalaceFlavorText = B_MSG_GROWL_DEEPLY,
         .battlePalaceSmokescreen = PALACE_TARGET_WEAKER,
+        .flavor = LIKE_FLAVOR_SWEET,
     },
     [NATURE_HASTY] =
     {
@@ -514,6 +525,7 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
         .battlePalacePercents = PALACE_STYLE(58, 37, 88, 6), //5%, 6%
         .battlePalaceFlavorText = B_MSG_GLINT_IN_EYE,
         .battlePalaceSmokescreen = PALACE_TARGET_WEAKER,
+        .flavor = LIKE_FLAVOR_SWEET,
     },
     [NATURE_SERIOUS] =
     {
@@ -526,6 +538,7 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
         .battlePalacePercents = PALACE_STYLE(34, 11, 29, 11), //55%, 60%
         .battlePalaceFlavorText = B_MSG_EAGER_FOR_MORE,
         .battlePalaceSmokescreen = PALACE_TARGET_WEAKER,
+        .flavor = LIKE_FLAVOR_NONE,
     },
     [NATURE_JOLLY] =
     {
@@ -538,6 +551,7 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
         .battlePalacePercents = PALACE_STYLE(35, 5, 35, 60), //60%, 5%
         .battlePalaceFlavorText = B_MSG_GETTING_IN_POS,
         .battlePalaceSmokescreen = PALACE_TARGET_STRONGER,
+        .flavor = LIKE_FLAVOR_SWEET,
     },
     [NATURE_NAIVE] =
     {
@@ -550,6 +564,7 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
         .battlePalacePercents = PALACE_STYLE(56, 22, 56, 22), //22%, 22%
         .battlePalaceFlavorText = B_MSG_EAGER_FOR_MORE,
         .battlePalaceSmokescreen = PALACE_TARGET_RANDOM,
+        .flavor = LIKE_FLAVOR_SWEET,
     },
     [NATURE_MODEST] =
     {
@@ -562,6 +577,7 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
         .battlePalacePercents = PALACE_STYLE(35, 45, 34, 60), //20%, 6%
         .battlePalaceFlavorText = B_MSG_GETTING_IN_POS,
         .battlePalaceSmokescreen = PALACE_TARGET_WEAKER,
+        .flavor = LIKE_FLAVOR_DRY,
     },
     [NATURE_MILD] =
     {
@@ -574,6 +590,7 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
         .battlePalacePercents = PALACE_STYLE(44, 50, 34, 6), //6%, 60%
         .battlePalaceFlavorText = B_MSG_GROWL_DEEPLY,
         .battlePalaceSmokescreen = PALACE_TARGET_STRONGER,
+        .flavor = LIKE_FLAVOR_DRY,
     },
     [NATURE_QUIET] =
     {
@@ -586,6 +603,7 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
         .battlePalacePercents = PALACE_STYLE(56, 22, 56, 22), //22%, 22%
         .battlePalaceFlavorText = B_MSG_EAGER_FOR_MORE,
         .battlePalaceSmokescreen = PALACE_TARGET_WEAKER,
+        .flavor = LIKE_FLAVOR_DRY,
     },
     [NATURE_BASHFUL] =
     {
@@ -598,6 +616,7 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
         .battlePalacePercents = PALACE_STYLE(30, 58, 30, 58), //12%, 12%
         .battlePalaceFlavorText = B_MSG_EAGER_FOR_MORE,
         .battlePalaceSmokescreen = PALACE_TARGET_WEAKER,
+        .flavor = LIKE_FLAVOR_NONE,
     },
     [NATURE_RASH] =
     {
@@ -610,6 +629,7 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
         .battlePalacePercents = PALACE_STYLE(30, 13, 27, 6), //57%, 67%
         .battlePalaceFlavorText = B_MSG_GROWL_DEEPLY,
         .battlePalaceSmokescreen = PALACE_TARGET_STRONGER,
+        .flavor = LIKE_FLAVOR_DRY,
     },
     [NATURE_CALM] =
     {
@@ -622,6 +642,7 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
         .battlePalacePercents = PALACE_STYLE(40, 50, 25, 62), //10%, 13%
         .battlePalaceFlavorText = B_MSG_GETTING_IN_POS,
         .battlePalaceSmokescreen = PALACE_TARGET_STRONGER,
+        .flavor = LIKE_FLAVOR_BITTER,
     },
     [NATURE_GENTLE] =
     {
@@ -634,6 +655,7 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
         .battlePalacePercents = PALACE_STYLE(18, 70, 90, 5), //12%, 5%
         .battlePalaceFlavorText = B_MSG_GLINT_IN_EYE,
         .battlePalaceSmokescreen = PALACE_TARGET_STRONGER,
+        .flavor = LIKE_FLAVOR_BITTER,
     },
     [NATURE_SASSY] =
     {
@@ -646,6 +668,7 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
         .battlePalacePercents = PALACE_STYLE(88, 6, 22, 20), //6%, 58%
         .battlePalaceFlavorText = B_MSG_GROWL_DEEPLY,
         .battlePalaceSmokescreen = PALACE_TARGET_WEAKER,
+        .flavor = LIKE_FLAVOR_BITTER,
     },
     [NATURE_CAREFUL] =
     {
@@ -658,6 +681,7 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
         .battlePalacePercents = PALACE_STYLE(42, 50, 42, 5), //8%, 53%
         .battlePalaceFlavorText = B_MSG_GROWL_DEEPLY,
         .battlePalaceSmokescreen = PALACE_TARGET_WEAKER,
+        .flavor = LIKE_FLAVOR_BITTER,
     },
     [NATURE_QUIRKY] =
     {
@@ -670,6 +694,7 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
         .battlePalacePercents = PALACE_STYLE(56, 22, 56, 22), //22%, 22%
         .battlePalaceFlavorText = B_MSG_EAGER_FOR_MORE,
         .battlePalaceSmokescreen = PALACE_TARGET_STRONGER,
+        .flavor = LIKE_FLAVOR_NONE,
     },
 };
 

@@ -627,6 +627,7 @@ struct NatureInfo
     u8 battlePalaceFlavorText;
     u8 battlePalaceSmokescreen;
     const u8 *natureGirlMessage;
+    u8 flavor;
 };
 
 #define SPINDA_SPOT_WIDTH 16

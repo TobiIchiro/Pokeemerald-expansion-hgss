@@ -73,6 +73,15 @@
 #define NATURE_QUIRKY   24
 #define NUM_NATURES     25
 
+// Flavors
+#define LIKE_FLAVOR_NONE     0
+#define LIKE_FLAVOR_SPICY    1
+#define LIKE_FLAVOR_DRY      2
+#define LIKE_FLAVOR_SWEET    3
+#define LIKE_FLAVOR_BITTER   4
+#define LIKE_FLAVOR_SOUR     5
+#define LIKE_FLAVOR_COUNT    6
+
 // Pokémon Stats
 #define STAT_HP      0
 #define STAT_ATK     1
