@@ -961,6 +961,7 @@ extern const u8 gText_Tera_Info[];
 extern const u8 gText_OT_Info[];
 extern const u8 gText_IDNumber_Info[];
 extern const u8 gText_Nothing_Memo[];
+extern const u8 gText_Flavor_Memo[];
 extern const u8 gText_Spicy_Memo[];
 extern const u8 gText_Dry_Memo[];
 extern const u8 gText_Sweet_Memo[];

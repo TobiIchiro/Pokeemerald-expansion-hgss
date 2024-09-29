@@ -49,6 +49,7 @@
 #include "constants/region_map_sections.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
+#include "data/text/characteristics.h"
 
 enum {
     PSS_PAGE_INFO,
@@ -3190,7 +3191,8 @@ static void BufferMonTrainerMemo(void)
     DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, sMemoNatureTextColor);
     DynamicPlaceholderTextUtil_SetPlaceholderPtr(1, sMemoMiscTextColor);
     BufferNatureString();
-
+    BufferCharacteristic();
+    FavoriteFlavor();
     if (InBattleFactory() == TRUE || InSlateportBattleTent() == TRUE || IsInGamePartnerMon() == TRUE)
     {
         DynamicPlaceholderTextUtil_ExpandPlaceholders(gStringVar4, gText_XNature);
@@ -3226,7 +3228,7 @@ static void BufferMonTrainerMemo(void)
         {
             text = gText_XNatureObtainedInTrade;
         }
-        FavoriteFlavor();
+        
 
         DynamicPlaceholderTextUtil_ExpandPlaceholders(gStringVar4, text);
         Free(metLevelString);
@@ -3281,9 +3283,10 @@ static void FavoriteFlavor(void)
         text = gText_Sour_Memo;
         break;
     default:
-        text = gText_Nothing_Memo;
+        text = gText_EmptyString2;
     }
     DynamicPlaceholderTextUtil_SetPlaceholderPtr(7, text);
+    
 }
 
 static void BufferCharacteristic(void)
@@ -3301,7 +3304,7 @@ static void BufferCharacteristic(void)
     iv[4] = GetMonData(mon, MON_DATA_SPATK_IV);
     iv[5] = GetMonData(mon, MON_DATA_SPDEF_IV);
     index = sum->pid % 6;
-
+    highestIV = 0;
     highestValue = iv[0];
     for(i = 0; i < 6; i++)
     {
@@ -3324,7 +3327,7 @@ static void BufferCharacteristic(void)
             break;
         }
     }
-    //DynamicPlaceholderTextUtil_SetPlaceholderPtr(6, gCharacteristicList[(highestValue % 5) * 6 + highestIV]);
+    DynamicPlaceholderTextUtil_SetPlaceholderPtr(6, gCharacteristics[(highestValue % 5) * 6 + highestIV]);
 }
 
 static bool8 DoesMonOTMatchOwner(void)
@@ -4042,7 +4045,7 @@ static void SetMonTypeIcons(void)
         {
             x = start + (width - 2 * 32 - 5)/2;//32 Width of Type sprite
             SetTypeSpritePosAndPal(gSpeciesInfo[summary->species].types[0], x, 47, SPRITE_ARR_ID_TYPE);
-            SetTypeSpritePosAndPal(gSpeciesInfo[summary->species].types[1], x + 5, 47, SPRITE_ARR_ID_TYPE + 1);
+            SetTypeSpritePosAndPal(gSpeciesInfo[summary->species].types[1], x + 32 + 5, 47, SPRITE_ARR_ID_TYPE + 1);
             SetSpriteInvisibility(SPRITE_ARR_ID_TYPE + 1, FALSE);
         }
         else
